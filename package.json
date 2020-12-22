@@ -1,0 +1,24 @@
+{
+  "name": "smart-care",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "An ecommmerce website with multivendor function",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js",
+    "serve:local": "nodemon index.js",
+    "serve:debug": "nodemon --inspect index.js",
+    "test": "mocha tests/*.js --exit",
+    "test:chrome": "node test_browser/index.js",
+    "lint": "eslint ./*.js",
+    "lint:fix": "eslint --fix ./*.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
