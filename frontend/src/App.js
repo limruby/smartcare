@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import ServiceScreen from './screens/ServiceScreen';
 
@@ -41,6 +42,7 @@ function App() {
         {/*START OF ROW*/}
         <div className="row">
         <main>
+            <Route path = "/cart/:id?" component={CartScreen} exact></Route>
             <Route path = "/service/:id" component={ServiceScreen} exact></Route>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
