@@ -1,42 +1,56 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import data from '../data'
 import Rating from '../components/Rating';
+import { useDispatch, useSelector } from 'react-redux';
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
+import { detailsServices } from '../actions/serviceActions';
 
 export default function ServiceScreen(props){
-    const service = data.services.find(x => x._id === props.match.params.id);
-    if(!service){
-        return <div>Service Not Found</div>
-    }
+    const dispatch = useDispatch();
+    const serviceId = props.match.params.id;
+    const serviceDetails = useSelector(state => state.serviceDetails);
+    const { loading, error, services } = serviceDetails;
+    
+    useEffect(() => {
+      dispatch(detailsServices(serviceId));
+    }, [dispatch, serviceId]);
+
     return (
+      <div>
+      {loading ? (
+        <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox variant="danger">{error}</MessageBox>
+      ) : (
 //Single Product Details
 <div>
     <Link to="/">Back to result</Link>
 <div className="small-container single-product">
   <div className="row">
     <div className="col-2">
-      <img src={service.image} width="100%" className="small-img" id="productImg" alt="more pictures" />
+      <img src={services.image} width="100%" className="small-img" id="productImg" alt="more pictures" />
       <div className="small-img-row">
         <div className="small-img-col">
-          <img src={service.image} width="100%" className="small-img" alt="more pictures"/>
+          <img src={services.image} width="100%" className="small-img" alt="more pictures"/>
         </div>
         <div className="small-img-col">
-          <img src={service.image} width="100%" className="small-img" alt="more pictures"/>
+          <img src={services.image} width="100%" className="small-img" alt="more pictures"/>
         </div>
         <div className="small-img-col">
-          <img src={service.image}width="100%" className="small-img" alt="more pictures"/>
+          <img src={services.image}width="100%" className="small-img" alt="more pictures"/>
         </div>
         <div className="small-img-col">
-          <img src={service.image} width="100%" className="small-img" alt="more pictures"/>
+          <img src={services.image} width="100%" className="small-img" alt="more pictures"/>
         </div>
       </div>
     </div>
     <div className="col-2">
-      <h2>{service.category}</h2>
-      <h1>{service.name}</h1>
-      <h4>{service.location}</h4>
-      <h4>{service.price}</h4>
-      <h5><Rating rating={service.rating} numReviews={service.numReviews}></Rating></h5>
+      <h2>{services.category}</h2>
+      <h1>{services.name}</h1>
+      <h4>{services.location}</h4>
+      <h4>{services.price}</h4>
+      <h5><Rating rating={services.rating} numReviews={services.numReviews}></Rating></h5>
       <form>
         <label>From:</label>
         <input type="date" id="from" name="from" />
@@ -47,7 +61,7 @@ export default function ServiceScreen(props){
         <input type="submit" />
       </form>
       <div>Status</div>
-      <div>{service.countInStock > 0 ? (
+      <div>{services.countInStock > 0 ? (
           <span className="success">Available</span> 
           )  : (
       <span className="danger">Unavailable</span> 
@@ -57,7 +71,7 @@ export default function ServiceScreen(props){
       <a href="cart.html" className="btn">Book Appointment</a>
       <h3>Service Details <i className="fa fa-indent" /></h3>
       <br />
-      <p>{service.description}</p>
+      <p>{services.description}</p>
     </div>
   </div>
 </div>
@@ -75,9 +89,6 @@ export default function ServiceScreen(props){
   </div>
 </div>
 </div>
-      
-
-      
-       
-
+      )}
+      </div>   
         )} 
