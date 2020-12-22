@@ -11,7 +11,7 @@ function App() {
           <div className="container">
             <div className="navbar">
               <div className="logo">
-                <a href="index.html"> <img src="images/logo.png" width="125px" /></a>
+                <a href="index.html"> <img src="../images/logo.png" width="125px" alt="logo"/></a>
               </div>
               <nav>
                 <ul id="MenuItems">
@@ -22,8 +22,8 @@ function App() {
                   <li><a href>Contact</a></li>
                 </ul>
               </nav>
-              <img src="images/cart_icon.png" width="30px" height="30px" />
-              <img src="images/menu.png" className="menu-icon" onclick="menutoggle()" />
+              <img src="../images/cart_icon.png" width="30px" height="30px" alt="cart-icon"/>
+              <img src="../images/menu.png" className="menu-icon" onclick="menutoggle()" alt="menu-icon"/>
             </div>
             </div>
                 {/*-------------------FEATURE CATEGORIES-----------------*/}
@@ -57,7 +57,7 @@ function App() {
                   <p>Explore our platform</p>
                 </div>
                 <div className="footer-col-2">
-                  <img src="images/logo.png" />
+                  <img src="../images/logo.png" alt="logo"/>
                   <p>Explore our platform</p>
                 </div>
                 <div className="footer-col-3">

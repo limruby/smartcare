@@ -15,19 +15,19 @@ export default function ServiceScreen(props){
 <div className="small-container single-product">
   <div className="row">
     <div className="col-2">
-      <img src={service.image} width="100%" className="small-img" id="productImg" />
+      <img src={service.image} width="100%" className="small-img" id="productImg" alt="more pictures" />
       <div className="small-img-row">
         <div className="small-img-col">
-          <img src={service.image} width="100%" className="small-img" />
+          <img src={service.image} width="100%" className="small-img" alt="more pictures"/>
         </div>
         <div className="small-img-col">
-          <img src={service.image} width="100%" className="small-img" />
+          <img src={service.image} width="100%" className="small-img" alt="more pictures"/>
         </div>
         <div className="small-img-col">
-          <img src={service.image}width="100%" className="small-img" />
+          <img src={service.image}width="100%" className="small-img" alt="more pictures"/>
         </div>
         <div className="small-img-col">
-          <img src={service.image} width="100%" className="small-img" />
+          <img src={service.image} width="100%" className="small-img" alt="more pictures"/>
         </div>
       </div>
     </div>
@@ -43,14 +43,14 @@ export default function ServiceScreen(props){
       </form>
       <form>
         <label>To:</label>
-        <input type="date" id="from" name="from" />
+        <input type="date" id="to" name="to" />
         <input type="submit" />
       </form>
       <div>Status</div>
       <div>{service.countInStock > 0 ? (
           <span className="success">Available</span> 
           )  : (
-      <span className="error">Unavailable</span> 
+      <span className="danger">Unavailable</span> 
       )}
       
       </div>

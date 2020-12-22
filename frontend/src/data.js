@@ -19,7 +19,7 @@ const data = {
             name:'Rumah Kesayangan',
             category:'Nursing Home',
             image:'/images/center1.png',
-            price: 'RM 150 per nightkou',
+            price: 'RM 150 per night',
             location: 'KL',
             countInStock: 0,
             rating: 4.5,
