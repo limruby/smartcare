@@ -1,31 +1,18 @@
-import React, {useEffect, useState} from 'react'
-import axios from 'axios'
+import React, {useEffect} from 'react'
 import Service from '../components/Service'
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { listServices } from '../actions/serviceActions';
 
 export default function HomeScreen(){
-  //fetch AJAX data from server to frontend
-  const[services, setServices] = useState([]);
-  const[loading, setLoading] = useState(false);
-  const[error, setError] = useState(false);
+  const dispatch = useDispatch();
+  const serviceList = useSelector((state) => state.serviceList);
+  const { loading, error, services } = serviceList;
 
   useEffect(() =>{
-    const fetchData = async () =>{
-      try{
-      setLoading(true)
-      const { data } = await axios.get('/api/services')
-      setLoading(false)
-      setServices(data)
-
-      }catch(err){
-        setError(err.message);
-        setLoading(false);
-      }
-      
-    };
-    fetchData();
-  }, [])
+    dispatch(listServices());
+  }, [dispatch])
 
     return (
       <div>
