@@ -1,30 +1,40 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { BrowserRouter, Link, Route } from 'react-router-dom';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import ServiceScreen from './screens/ServiceScreen';
 
 
 function App() {
+
+  // Show atch number for cart icon 
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
   return (
     <BrowserRouter>
     <div className="header"> {/*-BACKGROUND CONTAINER*/}
           <div className="container">
             <div className="navbar">
               <div className="logo">
-                <a href="index.html"> <img src="../images/logo.png" width="125px" alt="logo"/></a>
+                <Link to="index.html"> <img src="../images/logo.png" width="125px" alt="logo"/></Link>
               </div>
               <nav>
                 <ul id="MenuItems">
-                  <li><a href="index.html">Home</a></li>
-                  <li><a href="service.html">Services</a></li>
-                  <li><a href>About</a></li>
-                  <li><a href="account.html">Account</a></li>
-                  <li><a href>Contact</a></li>
+                  <li><Link to="">Home</Link></li>
+                  <li><Link to="">Services</Link></li>
+                  <li><Link to>About</Link></li>
+                  <li><Link to="">Sign In</Link></li>
+                  <li><Link to>Contact</Link></li>
                 </ul>
               </nav>
-              <img src="../images/cart_icon.png" width="30px" height="30px" alt="cart-icon"/>
-              <img src="../images/menu.png" className="menu-icon" onclick="menutoggle()" alt="menu-icon"/>
+             <Link to ="/cart"><img src="../images/cart_icon.png" width="30px" height="30px" alt="cart-icon"/>
+             {cartItems.length > 0 && (
+               <span className="badge">{cartItems.length}</span>
+              )}
+             </Link> 
+              <img src="../images/menu.png" className="menu-icon"  alt="menu-icon"/>
             </div>
             </div>
                 {/*-------------------FEATURE CATEGORIES-----------------*/}

@@ -1,4 +1,22 @@
+import bcrypt from 'bcrypt'
+
 const data = {
+    users:[
+        {
+            name:'Yuzhi',
+            email:'admin@example.com',
+            password: bcrypt.hashSync('1234', 8),
+            isAdmin: true,
+        },
+        {
+            name:'John',
+            email:'user@example.com',
+            password: bcrypt.hashSync('1234', 8),
+            isAdmin: false,
+        },
+
+    ],
+
     services: [
         {
             _id:'1',
@@ -7,10 +25,13 @@ const data = {
             image:'/images/nurse1.png',
             price: 'RM50',
             location: 'KL',
-            startDate: '2020-12-08',
-            endDate: '2020-12-21',
-            countInStock: 10,
+            schedule:[
+                "Time: 10.00AM, Day: Monday, Date:27 December 2020",
+                "Time: 12.00PM, Day: Monday, Date:27 December 2020",
+                           
+            ],
             rating: 3,
+            countInStock: 10,
             numReviews: 10,
             description: 'Contact of PIC, name of PIC, pricing, location, staff, what service do we provide, visiting hour for family members'
         },
@@ -21,7 +42,11 @@ const data = {
             image:'/images/center1.png',
             price: 'RM 150 per night',
             location: 'KL',
-            countInStock: 0,
+            schedule:[
+                "Time: 10.00AM, Day: Monday, Date:27 December 2020",
+                           
+            ],
+            countInStock: 10,
             rating: 4.5,
             numReviews: 10,
             description: 'Contact of PIC, name of PIC, pricing, location, staff, what service do we provide, visiting hour for family members'
@@ -33,10 +58,13 @@ const data = {
             image:'/images/item1.png',
             price: 150,
             location: 'KL',
-            countInStock: 20,
+            schedule:[
+                
+            ],
+            countInStock: 10,
             rating: 4.5,
             numReviews: 10,
-            description: 'Contact of PIC, name of PIC, pricing, location, staff, what service do we provide, visiting hour for family members'
+            description: 'Second hand us'
         },
     ],
 };

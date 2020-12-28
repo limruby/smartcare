@@ -22,7 +22,7 @@ export const listServices = () => async (dispatch) =>{
 };
 
 export const detailsServices = (serviceID) => async (dispatch) =>{
-    dispatch({type: SERVICE_DETAILS_REQUEST, payload: serviceID});
+    dispatch({type: SERVICE_DETAILS_REQUEST, payload: serviceID,});
     try {
         const { data } = await Axios.get(`/api/services/${serviceID}`);
     dispatch({ type: SERVICE_DETAILS_SUCCESS, payload: data });

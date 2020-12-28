@@ -9,16 +9,32 @@ import { detailsServices } from '../actions/serviceActions';
 export default function ServiceScreen(props) {
   const dispatch = useDispatch();
   const serviceId = props.match.params.id;
-  const [qty, setQty] = useState(1);
+  const [scheduleSlot, setScheduleSlot] = useState('');
+  /*
+  const updateOption = (e) => {
+    setScheduleSlot(e.target.value)
+  }
+  */
   const serviceDetails = useSelector(state => state.serviceDetails);
   const { loading, error, services } = serviceDetails;
 
   useEffect(() => {
-    dispatch(detailsServices(serviceId));
+    dispatch(detailsServices(serviceId));  
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, serviceId]);
-
+  
+/*
+  useEffect(() => {
+    if(services.schedule.length > 0){
+    const initialState = services.schedule.map(obj => obj.schedule);
+    setScheduleSlot(initialState);
+    console.log(initialState)
+    }
+  }, [services]);
+*/
 const addToCartHandler = () =>{
-  props.history.push(`/cart/${serviceId}?qty=${qty}`);
+  props.history.push(`/cart/${serviceId}?scheduleSlot=${scheduleSlot}`);
 };
 
   return (
@@ -56,18 +72,8 @@ const addToCartHandler = () =>{
                     <h4>{services.location}</h4>
                     <h4>{services.price}</h4>
                     <h5><Rating rating={services.rating} numReviews={services.numReviews}></Rating></h5>
-                    <form>
-                      <label>From:</label>
-                      <input type="date" id="from" name="from" />
-                    </form>
-                    <form>
-                      <label>To:</label>
-                      <input type="date" id="to" name="to" />
-                      <input type="submit" onClick={addToCartHandler} 
-                        className="btn" value="Book Appointment" />
-                    </form>
                     <div>Status</div>
-                    <div>{services.countInStock > 0 ? (
+                    <div>{services.schedule.length > 0 ? (
                       <span className="success">Available</span>
                     ) : (
                         <span className="danger">Unavailable</span>
@@ -75,32 +81,33 @@ const addToCartHandler = () =>{
                     </div>
                     {/*-------------------CONDITIONALS FOR BOOKING BTN-----------------*/}
                     {
-                      services.countInStock > 0 && (
-                        <>
-                        <li>
-                          <div className="row">
-                            <div>Available timeslot</div>
-                            <div>
-                              <select 
-                              value={qty} 
-                              onChange={e => setQty(e.target.value)}
-                              >
-                                {[...Array(services.countInStock).keys()].map(
-                                    (x) => (
-                                    <option key={x + 1} value={x + 1}>
-                                      {x + 1}
-                                      </option>
-                                    )
-                                  )}
-                              </select>
-                            </div>
-                          </div>
-                        </li>
-                        <li><button 
+                     
+                     services.schedule.length > 0 && (
+                        <div className="row-3">
+                        <h3>Available TimeSlot</h3>
+                        
+                        <select
+                         value={scheduleSlot}
+                         onChange= {(e) => {setScheduleSlot(e.target.value)}
+                        }
+                        >
+                        {services.schedule.map(
+                                (scheduleInfo, index) => (
+                                  <option key={index} value={scheduleInfo}>
+                                  {scheduleInfo}
+                                  </option>
+                                  
+                                )
+                              )}
+                              console.log(index)
+                        </select>
+                        <button 
                         onClick={addToCartHandler} 
-                        className="btn">Book Appointment</button></li>
-                        </>  
+                        className="btn">Book Appointment</button> 
+                        
+                        </div>
                       )
+                      
                     }
 
                     <h3>Service Details <i className="fa fa-indent" /></h3>
