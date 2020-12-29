@@ -13,8 +13,8 @@ serviceRouter.get('/', expressAsyncHandler(async(req, res)=>{
 
 serviceRouter.get(
     '/seed', 
-    expressAsyncHandler ( async(req, res) =>{
-    // await Service.remove({});
+    expressAsyncHandler ( async (req, res) =>{
+     await Service.remove({});
     const createdServices = await Service.insertMany(data.services);
     res.send({ createdServices })
 

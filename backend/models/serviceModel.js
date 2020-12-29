@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-
 const serviceSchema = new mongoose.Schema(
 
 {
@@ -7,10 +6,10 @@ const serviceSchema = new mongoose.Schema(
     image:{type: String, required: true},
     category:{type: String, required: true},
     description:{type: String, required: true},
-    price:{type: String, required: true},
-    schedule:{type: String, required: true},
-    rating:{type: String, required: true},
-    numReviews:{type: String, required: true},
+    price:{type: Number, required: true},
+    schedule:{type: Array, "default":[], required: true},
+    rating:{type: Number, required: true},
+    numReviews:{type: Number, required: true},
     location:{type: String, required: true},
     
 },

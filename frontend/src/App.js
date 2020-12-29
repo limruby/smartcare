@@ -23,10 +23,10 @@ function App() {
               <nav>
                 <ul id="MenuItems">
                   <li><Link to="">Home</Link></li>
-                  <li><Link to="">Services</Link></li>
-                  <li><Link to>About</Link></li>
+                  <li><Link to="/">Services</Link></li>
+                  <li><Link to="">About</Link></li>
                   <li><Link to="">Sign In</Link></li>
-                  <li><Link to>Contact</Link></li>
+                  <li><Link to="">Contact</Link></li>
                 </ul>
               </nav>
              <Link to ="/cart"><img src="../images/cart_icon.png" width="30px" height="30px" alt="cart-icon"/>
@@ -38,28 +38,13 @@ function App() {
             </div>
             </div>
                 {/*-------------------FEATURE CATEGORIES-----------------*/}
-      <div className="small-container">
-        <div className="row row-2">
-          <h2>All Services</h2>
-          <select>
-            <option>Default sorting</option>
-            <option>Sort by pricing</option>
-            <option>Sort by rating</option>
-            <option>Sort by popularity</option>
-            <option>Sort by location</option>
-          </select>
-        </div>
-        {/*START OF ROW*/}
-        <div className="row">
+      <div className="small-container">  
+      <h1>Our Service</h1>
         <main>
             <Route path = "/cart/:id?" component={CartScreen} exact></Route>
             <Route path = "/service/:id" component={ServiceScreen} exact></Route>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
-          {/*END OF COLUMN*/}      
-        </div>  
-            
-
           {/*-----------FOOTER--------------*/}
           <div className="footer">
             <div className="container">
