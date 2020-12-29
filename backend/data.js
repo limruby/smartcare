@@ -19,7 +19,6 @@ const data = {
 
     services: [
         {
-            _id:'1',
             name:'Ms. Jenny',
             category:'Nurse',
             image:'/images/nurse1.png',
@@ -36,7 +35,6 @@ const data = {
             description: 'Contact of PIC, name of PIC, pricing, location, staff, what service do we provide, visiting hour for family members'
         },
         {
-            _id:'2',
             name:'Rumah Kesayangan',
             category:'Nursing Home',
             image:'/images/center1.png',
@@ -52,7 +50,6 @@ const data = {
             description: 'Contact of PIC, name of PIC, pricing, location, staff, what service do we provide, visiting hour for family members'
         },
         {
-            _id:'3',
             name:'wheelchair',
             category:'Health Equipment',
             image:'/images/item1.png',

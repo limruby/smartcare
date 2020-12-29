@@ -22,7 +22,7 @@ export default function CartScreen(props) {
       }, [dispatch, scheduleSlot, serviceId]);
 
     return (
-        <div class="small-container cart-page">
+        <div className="small-container cart-page">
             <div className = "col-2" >
                 <h1>Cart</h1>
                 {cartItems.length === 0?<MessageBox>

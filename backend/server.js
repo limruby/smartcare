@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import data from './data.js';
+import serviceRouter from './routers/serviceRouter.js';
 import userRouter from './routers/userRouter.js';
 
 const app = express();
@@ -10,20 +10,8 @@ mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/smartcare', {
     useCreateIndex: true, 
 })
 
-app.get('/api/services/:id', (req, res) => {
-    const service = data.services.find( x => x._id === req.params.id);
-    if(service){
-        res.send(service);
-    }else{
-        res.status(404).send({message: 'Service not Found'});
-    }
-})
-
-app.get('/api/services', (req, res) => {
-    res.send(data.services);
-})
-
 app.use('/api/users', userRouter);
+app.use('/api/services', serviceRouter);
 app.get('/', (req, res) => {
     res.send('Server is ready');
 });

@@ -20,8 +20,6 @@ export default function ServiceScreen(props) {
 
   useEffect(() => {
     dispatch(detailsServices(serviceId));  
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, serviceId]);
   
 /*
