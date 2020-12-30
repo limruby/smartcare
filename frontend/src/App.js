@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
+import RegisterScreen from './screens/RegisterScreen';
 import ServiceScreen from './screens/ServiceScreen';
 import SigninScreen from './screens/SigninScreen';
 
@@ -35,6 +36,7 @@ function App() {
                   <li><Link to="">About</Link></li>
                   {
                     userInfo ? (
+                      <li>
                       <div className="dropdown">
                         <Link to="#">
                           {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
@@ -47,6 +49,7 @@ function App() {
                           </li>
                         </ul>
                       </div>
+                      </li>
                     ) : (
                   <li><Link to="/signin">Sign In</Link></li>
                     )
@@ -69,6 +72,7 @@ function App() {
             <Route path = "/cart/:id?" component={CartScreen} exact></Route>
             <Route path = "/service/:id" component={ServiceScreen} exact></Route>
             <Route path = "/signin" component={SigninScreen} exact></Route>
+            <Route path = "/register" component={RegisterScreen} exact></Route>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}

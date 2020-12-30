@@ -33,7 +33,6 @@ nav ul{
 nav ul li{
   display: inline-block;
   margin-right: 20px;
-
 }
 .badge{
 background-color: #ff523b;
@@ -49,11 +48,11 @@ margin-left: 0.2rem;
   position: relative;
 }
 .dropdown-content {
-  position: absolute;
+  position: relative;
   display: none;
   right: 0;
   min-width: 10rem;
-  padding: 1rem;
+  padding: 12px 16px;
   z-index: 1;
   background-color: #ffd6d6;
   margin: 0;
@@ -67,7 +66,6 @@ margin-left: 0.2rem;
 }
 .dropdown:hover .dropdown-content {
   display: block;
-  
 }
 /*--------SEARCH & FILTERS-------*/
 
@@ -492,10 +490,13 @@ th:last-child{
   padding: 50px 0;
   background: radial-gradient(#fff, #ffd6d6);  /* CHANGE COLOUR HERE AFTER STYLE BOARD IS DONE */
 }
+.form-box{
+  padding-top: 30px;
+}
 .form-container{
   background: #fff;
   width: 300px;
-  height: 400px;
+  height: 450px;
   position: relative;
   text-align: center;
   padding: 20px 0;
@@ -515,13 +516,18 @@ th:last-child{
 .form-btn{
   display: inline-block;
 }
+.form-btn hr{
+  border-top: 2px solid #ff523b;
+}
+
 .form-container form{
   max-width: 300px;
   padding: 0 20px;
   position: absolute;
-  top: 130px;
+  top: 55px;
   transition: transform 1s;
 }
+
 form input{
   width: 100%;
   height: 30px;
@@ -559,6 +565,9 @@ form a{
 
 }
 /*Alert for Status (Stock Count)*/
+.loading{
+  display: block !important;
+}
 .success {
   color: #20a020
 }

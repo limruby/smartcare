@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { signin } from '../actions/userActions';
+import { register } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
-export default function SigninScreen(props) {
-
+export default function RegisterScreen(props) {
+const [name, setName] = useState('');
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
+const [confirmPassword, setConfirmPassword] = useState('');
 
 const redirect = props.location.search
 ? props.location.search.split('=')[1]
 : '/';
 
-const userSignin = useSelector((state) => state.userSignin);
-const { userInfo, loading, error } = userSignin;
+const userRegister = useSelector((state) => state.userRegister);
+const { userInfo, loading, error } = userRegister;
 
 const dispatch = useDispatch();
 const submitHandler = (e) =>{
     e.preventDefault();
-    dispatch(signin(email, password))
+    if(password !== confirmPassword){
+      alert('Password and confirm password are not match')
+    }else{
+      dispatch(register(name, email, password))
+    }
 };
 useEffect(() =>{
     if(userInfo) {
@@ -40,14 +45,24 @@ useEffect(() =>{
             <div className="col-2">
               <div className="form-container">
                 <div className="form-btn">
-                  <span>Log In</span>
+                  <span>Register</span>
                   <hr/>
                 </div>
                 {loading && <LoadingBox></LoadingBox>}
                 {error && <MessageBox variant="danger">{error}</MessageBox>}
-                {/*Login*/}
+                {/*Register*/}
                 <form onSubmit={submitHandler}>
-                  {/*Email login*/}
+                  {/*Username*/}
+                  <label htmlFor="name">Username</label>
+                  <input 
+                  type="text" 
+                  placeholder="Enter username" 
+                  id="name" 
+                  required 
+                  onChange={ e => setName(e.target.value)}>
+                  </input>
+
+                  {/*Email*/}
                   <label htmlFor="email">Email address</label>
                   <input 
                   type="email" 
@@ -57,7 +72,7 @@ useEffect(() =>{
                   onChange={ e => setEmail(e.target.value)}>
                   </input>
 
-                   {/*Pswd login*/}
+                   {/*Pswd*/}
                   <label htmlFor="password">Password</label>
                   <input 
                   type="password" 
@@ -66,11 +81,22 @@ useEffect(() =>{
                   required 
                   onChange={ e => setPassword(e.target.value)}>
                   </input>
-                  <button type="submit" className="btn">Sign In</button>
+
+                  {/*Confirm Pswd*/}
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <input 
+                  type="password" 
+                  placeholder="Confirm password" 
+                  id="confirmPassword" 
+                  required 
+                  onChange={ e => setConfirmPassword(e.target.value)}>
+                  </input>
+
+                  <button type="submit" className="btn">Register</button>
                   <div>
-                      New customer?
-                      <br />
-                  <Link to={`/register?redirect=${redirect}`}>Create your account </Link>
+                      Already have an account?
+                      <br/>
+                  <Link to={`/signin?redirect=${redirect}`}>Sign in</Link>
                   </div>
                 </form>
                  
