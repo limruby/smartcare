@@ -1,9 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { signout } from './actions/userActions';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import ServiceScreen from './screens/ServiceScreen';
+import SigninScreen from './screens/SigninScreen';
 
 
 function App() {
@@ -11,6 +13,12 @@ function App() {
   // Show atch number for cart icon 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+  const dispatch = useDispatch();
+  const signoutHandler = () =>{
+    dispatch(signout());
+  }
 
   return (
     <BrowserRouter>
@@ -25,7 +33,24 @@ function App() {
                   <li><Link to="">Home</Link></li>
                   <li><Link to="/">Services</Link></li>
                   <li><Link to="">About</Link></li>
-                  <li><Link to="">Sign In</Link></li>
+                  {
+                    userInfo ? (
+                      <div className="dropdown">
+                        <Link to="#">
+                          {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                        </Link>
+                        <ul className="dropdown-content">
+                          <li>
+                            <Link to="#signout" onClick={signoutHandler}>
+                              Sign Out
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    ) : (
+                  <li><Link to="/signin">Sign In</Link></li>
+                    )
+                  }  
                   <li><Link to="">Contact</Link></li>
                 </ul>
               </nav>
@@ -43,6 +68,7 @@ function App() {
         <main>
             <Route path = "/cart/:id?" component={CartScreen} exact></Route>
             <Route path = "/service/:id" component={ServiceScreen} exact></Route>
+            <Route path = "/signin" component={SigninScreen} exact></Route>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}
@@ -63,14 +89,6 @@ function App() {
                     <li>Community</li>
                     <li>Return Policy</li>
                     <li>Join Affiliate</li>
-                  </ul>
-                </div>
-                <div className="footer-col-4">
-                  <h3>Follow Us</h3>
-                  <ul>
-                    <li>Facebook</li>
-                    <li>Instagram</li>
-                    <li>YouTube</li>
                   </ul>
                 </div>
               </div>

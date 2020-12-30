@@ -10,6 +10,11 @@ body{
   -moz-osx-font-smoothing: grayscale;
 }
 
+main{
+  padding: 1rem;
+  
+}
+
 .navbar{
   display: flex;
   align-items: center;
@@ -22,11 +27,13 @@ nav{
 }
 nav ul{
   display: inline-block;
-  list-style-type: none;
+  list-style-type: none; 
 }
+
 nav ul li{
   display: inline-block;
   margin-right: 20px;
+
 }
 .badge{
 background-color: #ff523b;
@@ -35,6 +42,32 @@ border-radius: 50%;
 padding: 0.2rem 0.7rem;
 font-size: 1.4rem;
 margin-left: 0.2rem;
+}
+/* Dropdown */
+.dropdown  {
+  display: inline-block;
+  position: relative;
+}
+.dropdown-content {
+  position: absolute;
+  display: none;
+  right: 0;
+  min-width: 10rem;
+  padding: 1rem;
+  z-index: 1;
+  background-color: #ffd6d6;
+  margin: 0;
+  margin-top: 0.4rem;
+  border-radius: 0.5rem;
+  transition: delay 10s;
+}
+.fa.fa-caret-down{
+  font-size: 24px;
+  margin-right: 10px;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+  
 }
 /*--------SEARCH & FILTERS-------*/
 
@@ -157,8 +190,6 @@ p{
 .small-container{ /* CONTAINER TO PUT SERVICES PICS */ 
   max-width: 1080px;
   margin: auto;
-  padding-left: 25px;
-  padding-right: 25px;
 }
 .col-4{
   flex-basis: 25%;
@@ -260,7 +291,7 @@ h4{
   background: #000;
   color: #8a8a8a;
   font-size: 14px;
-  padding: 60px 0 20px;
+  padding: 10px 0 20px;
 }
 .footer p{
   color: #8a8a8a;
