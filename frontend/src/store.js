@@ -1,4 +1,4 @@
-import {compose, applyMiddleware, createStore, combineReducers} from 'redux';
+import { compose, applyMiddleware, createStore, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { cartReducer } from './reducers/cartReducers';
 import { serviceDetailsReducer } from './reducers/serviceDetailsReducer';
@@ -8,14 +8,17 @@ import { userRegisterReducer, userSigninReducer } from './reducers/userReducers'
 const initialState = {
     userSignin: {
         userInfo: localStorage.getItem('userInfo')
-        ? JSON.parse(localStorage.getItem('userInfo'))
-        : null,
+            ? JSON.parse(localStorage.getItem('userInfo'))
+            : null,
     },
-    cart:{
+    cart: {
         cartItems: localStorage.getItem('cartItems')
-        ? JSON.parse(localStorage.getItem('cartItems'))
-        :[]
-    }
+            ? JSON.parse(localStorage.getItem('cartItems'))
+            : [],
+        customerAddress: localStorage.getItem('customerAddress') 
+        ? JSON.parse(localStorage.getItem('customerAddress'))
+        : {},
+    },
 };
 const reducer = combineReducers({
     serviceList: serviceListReducer,

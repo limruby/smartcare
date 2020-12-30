@@ -593,6 +593,18 @@ form a{
 .option{
   margin: 0px;
 }
+/*----------Checkout Steps-----------------*/
+.checkout-steps > div {
+  border-top: 0.3rem #c0c0c0 solid;
+  color: #c0c0c0;
+  flex: 1;
+  padding: 1rem;
+  font-weight: bold;
+}
+.checkout-steps > div.active {
+  border-top-color: #f08000;
+  color: #f08000;
+}
 
 /*----------media query for less than 600 screen size----------*/
 @media only screen and (max-width: 600px){
