@@ -5,6 +5,7 @@ import { signout } from './actions/userActions';
 import CartScreen from './screens/CartScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
 import HomeScreen from './screens/HomeScreen';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ServiceScreen from './screens/ServiceScreen';
 import SigninScreen from './screens/SigninScreen';
@@ -75,6 +76,7 @@ function App() {
             <Route path = "/signin" component={SigninScreen} exact></Route>
             <Route path = "/register" component={RegisterScreen} exact></Route>
             <Route path = "/shipping" component={CheckoutScreen} exact></Route>
+            <Route path = "/payment" component={PaymentMethodScreen} exact></Route>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}
