@@ -4,7 +4,8 @@ const bookingSchema = new mongoose.Schema({
     bookingItems: [{
         name: {type: String, required: true},
         // if not array then set type: string
-        scheduleSlot: {type: Array, required: true},
+        scheduleSlot: {type: String, required: true},
+        // scheduleSlot: {type: String, required:true}, 
         image: {type: String, required: true},
         price: {type: Number, required: true},
         service: {

@@ -1,20 +1,33 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
+import { createBooking } from '../actions/bookingActions';
 import CheckoutSteps from '../components/CheckoutSteps'
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
+import { BOOKING_CREATE_RESET } from '../constants/bookingConstants';
 
 export default function PlaceBookingScreen(props) {
     const cart = useSelector((state) => state.cart);
     if (!cart.paymentMethod) {
         props.history.location('/payment')
     }
+    const bookingCreate = useSelector((state) => state.bookingCreate);
+    const { loading, success, error, booking } = bookingCreate;
     const toPrice = (num) => Number(num.toFixed(2)) // 5.123 => "5.12" => 5.12
     cart.itemsPrice = toPrice(cart.cartItems.reduce((a, c) => a + c.price, 0));
     cart.taxPrice = toPrice(0.05 * cart.itemsPrice);
     cart.totalPrice = cart.itemsPrice + cart.taxPrice;
+    const dispatch = useDispatch();
     const placeBookingHandler = () => {
-        //dispatch place bookimg actions
-    }
+        dispatch(createBooking({ ...cart, bookingItems: cart.cartItems }));
+    };
+    useEffect(() => {
+        if (success) {
+            props.history.push(`/booking/${booking._id}`);
+            dispatch({ type: BOOKING_CREATE_RESET });
+        }
+    }, [dispatch, booking, props.history, success]);
     return (
         <div>
             {/*Start coding */}
@@ -115,7 +128,7 @@ export default function PlaceBookingScreen(props) {
                             <li>
                                 <div>Appointments</div>
                                 <div>RM {cart.itemsPrice.toFixed(2)}</div>
-                                <br/>
+                                <br />
                             </li>
                             <li>
                                 <div>Tax</div>
@@ -128,12 +141,15 @@ export default function PlaceBookingScreen(props) {
                                 <br />
                             </li>
                             <li>
-                                <button 
-                                className="btn" 
-                                onClick={placeBookingHandler}
-                                disabled={cart.cartItems.length === 0}
+                                <button
+                                    className="btn"
+                                    onClick={placeBookingHandler}
+                                    disabled={cart.cartItems.length === 0}
                                 >Place appointment</button>
                             </li>
+                            {loading && <LoadingBox></LoadingBox>}
+                            {error && <MessageBox variant="danger">{error}</MessageBox>}
+
                         </ul>
 
                     </div>

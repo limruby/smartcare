@@ -9,12 +9,12 @@ bookingRouter.post(
   '/',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    if (req.body.orderItems.length === 0) {
+    if (req.body.bookingItems.length === 0) {
       res.status(400).send({ message: 'Cart is empty' });
     } else {
       const booking = new Booking({
-        orderItems: req.body.orderItems,
-        customerAddress: req.body.shippingAddress,
+        bookingItems: req.body.bookingItems,
+        customerAddress: req.body.customerAddress,
         paymentMethod: req.body.paymentMethod,
         itemsPrice: req.body.itemsPrice,
         taxPrice: req.body.taxPrice,
