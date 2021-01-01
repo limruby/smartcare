@@ -1,9 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { signout } from './actions/userActions';
+import BookingHistoryScreen from './screens/BookingHistoryScreen';
+import BookingScreen from './screens/BookingScreen';
 import CartScreen from './screens/CartScreen';
+import CheckoutScreen from './screens/CheckoutScreen';
 import HomeScreen from './screens/HomeScreen';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
+import PlaceBookingScreen from './screens/PlaceBookingScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import RegisterScreen from './screens/RegisterScreen';
 import ServiceScreen from './screens/ServiceScreen';
+import SigninScreen from './screens/SigninScreen';
 
 
 function App() {
@@ -11,6 +20,12 @@ function App() {
   // Show atch number for cart icon 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+  const dispatch = useDispatch();
+  const signoutHandler = () =>{
+    dispatch(signout());
+  }
 
   return (
     <BrowserRouter>
@@ -23,10 +38,35 @@ function App() {
               <nav>
                 <ul id="MenuItems">
                   <li><Link to="">Home</Link></li>
-                  <li><Link to="">Services</Link></li>
-                  <li><Link to>About</Link></li>
-                  <li><Link to="">Sign In</Link></li>
-                  <li><Link to>Contact</Link></li>
+                  <li><Link to="/">Services</Link></li>
+                  <li><Link to="">About</Link></li>
+                  {
+                    userInfo ? (
+                      <li>
+                      <div className="dropdown">
+                        <Link to="#">
+                          {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                        </Link>
+                        <ul className="dropdown-content">
+                          <li>
+                          <Link to="/profile">User Profile</Link>
+                          </li>
+                          <li>
+                            <Link to="/bookingHistory">Booking History</Link>
+                          </li>
+                          <li>
+                            <Link to="#signout" onClick={signoutHandler}>
+                              Sign Out
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                      </li>
+                    ) : (
+                  <li><Link to="/signin">Sign In</Link></li>
+                    )
+                  }  
+                  <li><Link to="">Contact</Link></li>
                 </ul>
               </nav>
              <Link to ="/cart"><img src="../images/cart_icon.png" width="30px" height="30px" alt="cart-icon"/>
@@ -38,28 +78,21 @@ function App() {
             </div>
             </div>
                 {/*-------------------FEATURE CATEGORIES-----------------*/}
-      <div className="small-container">
-        <div className="row row-2">
-          <h2>All Services</h2>
-          <select>
-            <option>Default sorting</option>
-            <option>Sort by pricing</option>
-            <option>Sort by rating</option>
-            <option>Sort by popularity</option>
-            <option>Sort by location</option>
-          </select>
-        </div>
-        {/*START OF ROW*/}
-        <div className="row">
+      <div className="small-container">  
+      <h1>Our Service</h1>
         <main>
             <Route path = "/cart/:id?" component={CartScreen} exact></Route>
             <Route path = "/service/:id" component={ServiceScreen} exact></Route>
+            <Route path = "/signin" component={SigninScreen} exact></Route>
+            <Route path = "/register" component={RegisterScreen} exact></Route>
+            <Route path = "/shipping" component={CheckoutScreen} exact></Route>
+            <Route path = "/payment" component={PaymentMethodScreen} exact></Route>
+            <Route path = "/placebooking" component={PlaceBookingScreen} exact></Route>
+            <Route path = "/booking/:id" component={BookingScreen} exact></Route>
+            <Route path = "/bookingHistory" component={BookingHistoryScreen} exact></Route>
+            <Route path = "/profile" component={ProfileScreen} exact></Route>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
-          {/*END OF COLUMN*/}      
-        </div>  
-            
-
           {/*-----------FOOTER--------------*/}
           <div className="footer">
             <div className="container">
@@ -78,14 +111,6 @@ function App() {
                     <li>Community</li>
                     <li>Return Policy</li>
                     <li>Join Affiliate</li>
-                  </ul>
-                </div>
-                <div className="footer-col-4">
-                  <h3>Follow Us</h3>
-                  <ul>
-                    <li>Facebook</li>
-                    <li>Instagram</li>
-                    <li>YouTube</li>
                   </ul>
                 </div>
               </div>

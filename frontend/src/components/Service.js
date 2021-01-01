@@ -9,9 +9,9 @@ export default function Service(props){
            <Link to={`/service/${service._id}`}> 
           <img src={service.image} alt="services_image" /> 
           </Link>
-          <h4>{service.name}</h4>
+          <h2>{service.name}</h2>
              <Rating rating={service.rating} numReviews={service.numReviews}></Rating>
-               <p>{service.price}</p>
+               <p>RM {service.price}</p>
                <p>{service.location}</p>
                </div>
           )}                

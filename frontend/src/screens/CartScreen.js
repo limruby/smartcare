@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 import MessageBox from "../components/MessageBox";
 
 export default function CartScreen(props) {
@@ -16,15 +16,23 @@ export default function CartScreen(props) {
   
   useEffect(() => {
     if (serviceId) {
-      console.log(serviceId);
-      console.log(scheduleSlot);
+      console.log("ScheduleSlot", scheduleSlot);
       dispatch(addToCart(serviceId, scheduleSlot));
     }
   }, [dispatch, scheduleSlot, serviceId]);
 
+  const removeFromCartHandler = (id) => {
+    // delete action
+    dispatch(removeFromCart(id))
+  }
+
+  const checkoutHandler = () => {
+    props.history.push('/signin?redirect=shipping');
+  };
+
   return (
-    <div class="small-container cart-page">
-      <div className="col-2">
+    <div className ="row">
+    <div className="small-container">
         <h1>Cart</h1>
         {cartItems.length === 0 ? (
           <MessageBox>
@@ -33,50 +41,72 @@ export default function CartScreen(props) {
         ) : (
           <ul>
             {cartItems.map((item) => (
-              <li key={item.service}>
-                <div className="row">
-                  <div>
+              <li key={item.service} >
+                <div className="small-container cart-page">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Service</th>
+                        <th>Appointment</th>
+                        <th>Price</th>
+                      </tr>
+                      </thead>
+               {/* Start New Row */}
+               <tbody>
+               <tr>
+                 <td>
+                  <div className="cart-info">
+                    <Link to={`service/${item.service}`}>
                     <img src={item.image} alt={item.name}></img>
+                    <p>{item.name}</p>
+                    </Link>
+                    <div>
+                    
+                    <small>Price: RM {item.price}</small>
+                    <br />
+                    <button className ="btn"
+                    onClick={()=> removeFromCartHandler(item.service)}>Remove</button>
+                    </div>
                   </div>
-                </div>
+                  </td>
+                  <td>
+                   {item.scheduleSlot}  
+                    </td>
+                  <td>RM {item.price}</td>
+                  </tr>
+                  </tbody></table></div>
+                  {/* End of row */}
               </li>
-            ))}
+            ))}                 
           </ul>
-
-          /*-----------CART ITEM DETAILS--------------
-      <div className="small-container cart-page">
-      <table>
-        <tbody><tr>
-            <th>Service</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-          </tr>
-          //START NEW ROW
-          <tr>
-            <td>
-              <div className="cart-info">
-                <img src="images/center1.jpg" />
-                <div>
-                  <p>Rumah Kesayangan</p>
-                  <small>Price: RM 300 per night</small>
-                  <br />
-                  <a href>Remove</a>
-                </div>
-              </div>
-            </td>
-            <td><input type="number" defaultValue={1} /></td>
-            <td>RM 300</td>
-          </tr>
-          //END OF A ROW
-        </tbody></table></div>
-        */
         )}
       </div>
+      {/* Checkout button*/}
+      <div className="total-price">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      Total: {cartItems.length} Appointments 
+                     </td>
+                     <td>
+                       Subtotal: RM {cartItems.reduce((a, c) => a + c.price, 0)}
+                     </td>
+                  </tr>
+                </tbody>
+              </table>             
+      </div>
+      <button 
+              type = "button" 
+              className="btn" 
+              onClick={checkoutHandler}
+              disabled = {cartItems.length === 0}
+              >
+               Checkout
+                </button>    
+       {/* End of Checkout button*/}
+      </div>
+      
 
-      <p>
-        APPOINTMENT DATE: serviceId: {serviceId} Available schedule:{" "}
-        {scheduleSlot}
-      </p>
-    </div>
   );
 }
