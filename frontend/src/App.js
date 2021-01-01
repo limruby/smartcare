@@ -9,6 +9,7 @@ import CheckoutScreen from './screens/CheckoutScreen';
 import HomeScreen from './screens/HomeScreen';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceBookingScreen from './screens/PlaceBookingScreen';
+import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ServiceScreen from './screens/ServiceScreen';
 import SigninScreen from './screens/SigninScreen';
@@ -48,6 +49,9 @@ function App() {
                         </Link>
                         <ul className="dropdown-content">
                           <li>
+                          <Link to="/profile">User Profile</Link>
+                          </li>
+                          <li>
                             <Link to="/bookingHistory">Booking History</Link>
                           </li>
                           <li>
@@ -86,6 +90,7 @@ function App() {
             <Route path = "/placebooking" component={PlaceBookingScreen} exact></Route>
             <Route path = "/booking/:id" component={BookingScreen} exact></Route>
             <Route path = "/bookingHistory" component={BookingHistoryScreen} exact></Route>
+            <Route path = "/profile" component={ProfileScreen} exact></Route>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}
