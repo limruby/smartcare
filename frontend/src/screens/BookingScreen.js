@@ -3,15 +3,19 @@ import { PayPalButton } from 'react-paypal-button-v2'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { detailsBooking } from '../actions/bookingActions';
+import { detailsBooking, payBooking } from '../actions/bookingActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { BOOKING_PAY_RESET } from '../constants/bookingConstants';
 
 export default function BookingScreen(props) {
     const bookingId = props.match.params.id;
     const [sdkReady, setSdkReady] = useState(false);
     const bookingDetails = useSelector((state) => state.bookingDetails);
     const { booking, loading, error } = bookingDetails;
+
+    const bookingPay = useSelector((state) => state.bookingPay);
+    const { loading: loadingPay, error: errorPay, success: successPay } = bookingPay;
     const dispatch = useDispatch();
     useEffect(() => {
         const addPayPalScript = async () => {
@@ -25,7 +29,8 @@ export default function BookingScreen(props) {
             }
             document.body.appendChild(script);
         }
-        if (!booking) {
+        if (!booking || successPay || (booking && booking._id !== bookingId)) {
+            dispatch({ type: BOOKING_PAY_RESET })
             dispatch(detailsBooking(bookingId));
         } else {
             if (!booking.isPaid) {
@@ -36,10 +41,11 @@ export default function BookingScreen(props) {
                 }
             }
         }
-    }, [booking, bookingId, dispatch, sdkReady]);
+    }, [booking, bookingId, dispatch, sdkReady, successPay]);
 
-    const successPaymentHandler = () => {
+    const successPaymentHandler = (paymentResult) => {
         // dispatch pay booking
+        dispatch(payBooking(booking, paymentResult));
     }
 
     return loading ? (<LoadingBox></LoadingBox>) :
@@ -170,10 +176,15 @@ export default function BookingScreen(props) {
                                                 {!sdkReady ? (
                                                     <LoadingBox></LoadingBox>
                                                 ) : (
+                                                    <>
+                                                    {errorPay && (<MessageBox variant="danger">{errorPay}</MessageBox>)}
+                                                    {loadingPay && <LoadingBox></LoadingBox>}
+
                                                         <PayPalButton
                                                             amount={booking.totalPrice}
                                                             onSuccess={successPaymentHandler}
                                                         ></PayPalButton>
+                                                        </>
                                                     )}
                                             </li>
                                         )

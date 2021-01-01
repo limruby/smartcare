@@ -1,4 +1,3 @@
-
 import {
     BOOKING_CREATE_FAILURE,
     BOOKING_CREATE_REQUEST,
@@ -7,6 +6,10 @@ import {
     BOOKING_DETAILS_FAILURE,
     BOOKING_DETAILS_REQUEST,
     BOOKING_DETAILS_SUCCESS,
+    BOOKING_PAY_REQUEST,
+    BOOKING_PAY_SUCCESS,
+    BOOKING_PAY_FAILURE,
+    BOOKING_PAY_RESET,
   } from '../constants/bookingConstants';
   
   export const bookingCreateReducer = (state = {}, action) => {
@@ -32,6 +35,21 @@ import {
         return { loading: false, booking: action.payload };
       case BOOKING_DETAILS_FAILURE:
         return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
+  };
+
+  export const bookingPayReducer = (state = {}, action) => {
+    switch (action.type) {
+      case BOOKING_PAY_REQUEST:
+        return { loading: true };
+      case BOOKING_PAY_SUCCESS:
+        return { loading: false, success: true };
+      case BOOKING_PAY_FAILURE:
+        return { loading: false, error: action.payload };
+      case BOOKING_PAY_RESET:
+        return {};
       default:
         return state;
     }
