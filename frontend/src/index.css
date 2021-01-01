@@ -442,6 +442,9 @@ table{
   width: 100%;
   border-collapse: collapse;
 }
+tbody tr:nth-of-type(odd) {
+  background-color: #fff;
+}
 .cart-info{
   display: flex;
   flex-wrap: wrap;
@@ -625,6 +628,7 @@ form a{
 .card-body > * {
   margin-bottom: 0.5rem;
 }
+
 /*----------media query for less than 600 screen size----------*/
 @media only screen and (max-width: 600px){
   .row{

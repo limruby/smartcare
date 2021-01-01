@@ -5,6 +5,15 @@ import { isAuth } from '../utils.js';
 
 const bookingRouter = express.Router();
 
+bookingRouter.get(
+  '/mine',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const bookings = await Booking.find({ user: req.user._id });
+    res.send(bookings);
+  })
+);
+
 bookingRouter.post(
   '/',
   isAuth,

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
+import BookingHistoryScreen from './screens/BookingHistoryScreen';
 import BookingScreen from './screens/BookingScreen';
 import CartScreen from './screens/CartScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
@@ -47,6 +48,9 @@ function App() {
                         </Link>
                         <ul className="dropdown-content">
                           <li>
+                            <Link to="/bookingHistory">Booking History</Link>
+                          </li>
+                          <li>
                             <Link to="#signout" onClick={signoutHandler}>
                               Sign Out
                             </Link>
@@ -81,6 +85,7 @@ function App() {
             <Route path = "/payment" component={PaymentMethodScreen} exact></Route>
             <Route path = "/placebooking" component={PlaceBookingScreen} exact></Route>
             <Route path = "/booking/:id" component={BookingScreen} exact></Route>
+            <Route path = "/bookingHistory" component={BookingHistoryScreen} exact></Route>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}

@@ -10,6 +10,9 @@ import {
   BOOKING_PAY_REQUEST,
   BOOKING_PAY_SUCCESS,
   BOOKING_PAY_FAILURE,
+  BOOKING_MINE_LIST_REQUEST,
+  BOOKING_MINE_LIST_SUCCESS,
+  BOOKING_MINE_LIST_FAILURE,
 } from '../constants/bookingConstants';
 
 export const createBooking = (booking) => async (dispatch, getState) => {
@@ -75,5 +78,26 @@ export const payBooking = (booking, paymentResult) => async (
         ? error.response.data.message
         : error.message;
     dispatch({ type: BOOKING_PAY_FAILURE, payload: message });
+  }
+};
+
+export const listBookingMine = () => async (dispatch, getState) => {
+  dispatch({ type: BOOKING_MINE_LIST_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.get('/api/bookings/mine', {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    dispatch({ type: BOOKING_MINE_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: BOOKING_MINE_LIST_FAILURE, payload: message });
   }
 };
