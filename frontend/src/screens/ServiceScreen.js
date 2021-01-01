@@ -105,6 +105,7 @@ export default function ServiceScreen(props) {
                 <h1>{services.name}</h1>
                 <h4>{services.location}</h4>
                 <h4>RM {services.price}</h4>
+
                 <h5>
                   <Rating
                     rating={services.rating}
@@ -171,3 +172,4 @@ export default function ServiceScreen(props) {
     </div>
   );
 }
+
