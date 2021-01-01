@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import serviceRouter from './routers/serviceRouter.js';
 import userRouter from './routers/userRouter.js';
+import bookingRouter from './routers/bookingRouter.js';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/smartcare', {
 
 app.use('/api/users', userRouter);
 app.use('/api/services', serviceRouter);
+app.use('/api/bookings', bookingRouter)
 app.get('/', (req, res) => {
     res.send('Server is ready');
 });
