@@ -20,7 +20,6 @@ export const addToCart = (serviceID, scheduleSlot) => async(
     });
   // after adding service in cart, it will store in local storage
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
-    console.log(data.schedule)
   };
 
   export const removeFromCart= (serviceId) => (dispatch, getState)=>{

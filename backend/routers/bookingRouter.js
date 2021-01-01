@@ -29,4 +29,18 @@ bookingRouter.post(
   })
 );
 
+bookingRouter.get(
+  '/:id',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const booking = await Booking.findById(req.params.id);
+    if (booking) {
+      res.send(booking);
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
+
+
 export default bookingRouter;

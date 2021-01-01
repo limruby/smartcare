@@ -16,8 +16,7 @@ export default function CartScreen(props) {
   
   useEffect(() => {
     if (serviceId) {
-      console.log(serviceId);
-      console.log(scheduleSlot);
+      console.log("ScheduleSlot", scheduleSlot);
       dispatch(addToCart(serviceId, scheduleSlot));
     }
   }, [dispatch, scheduleSlot, serviceId]);

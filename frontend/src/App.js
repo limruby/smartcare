@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
+import BookingScreen from './screens/BookingScreen';
 import CartScreen from './screens/CartScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -79,6 +80,7 @@ function App() {
             <Route path = "/shipping" component={CheckoutScreen} exact></Route>
             <Route path = "/payment" component={PaymentMethodScreen} exact></Route>
             <Route path = "/placebooking" component={PlaceBookingScreen} exact></Route>
+            <Route path = "/booking/:id" component={BookingScreen} exact></Route>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}
