@@ -18,7 +18,10 @@ mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/smartcare', {
 
 app.use('/api/users', userRouter);
 app.use('/api/services', serviceRouter);
-app.use('/api/bookings', bookingRouter)
+app.use('/api/bookings', bookingRouter);
+app.get('/api/config/paypal' , (req, res) => {
+    res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
+})
 app.get('/', (req, res) => {
     res.send('Server is ready');
 });

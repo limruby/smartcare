@@ -24,7 +24,7 @@ import {
     }
   };
 
-  export const bookingDetailsReducer = (state = {loading: true, order:{}}, action) => {
+  export const bookingDetailsReducer = (state = { loading: true }, action) => {
     switch (action.type) {
       case BOOKING_DETAILS_REQUEST:
         return { loading: true };
