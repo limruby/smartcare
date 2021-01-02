@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
+import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
 import BookingHistoryScreen from './screens/BookingHistoryScreen';
 import BookingScreen from './screens/BookingScreen';
@@ -12,6 +13,7 @@ import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceBookingScreen from './screens/PlaceBookingScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ServiceListScreen from './screens/ServiceListScreen';
 import ServiceScreen from './screens/ServiceScreen';
 import SigninScreen from './screens/SigninScreen';
 
@@ -112,6 +114,7 @@ function App() {
             <Route path = "/booking/:id" component={BookingScreen} exact></Route>
             <Route path = "/bookingHistory" component={BookingHistoryScreen} exact></Route>
             <PrivateRoute path = "/profile" component={ProfileScreen} exact></PrivateRoute>
+            <AdminRoute path ="/servicelist" component={ServiceListScreen} exact></AdminRoute>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}
