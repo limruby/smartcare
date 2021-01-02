@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
+import PrivateRoute from './components/PrivateRoute';
 import BookingHistoryScreen from './screens/BookingHistoryScreen';
 import BookingScreen from './screens/BookingScreen';
 import CartScreen from './screens/CartScreen';
@@ -90,7 +91,7 @@ function App() {
             <Route path = "/placebooking" component={PlaceBookingScreen} exact></Route>
             <Route path = "/booking/:id" component={BookingScreen} exact></Route>
             <Route path = "/bookingHistory" component={BookingHistoryScreen} exact></Route>
-            <Route path = "/profile" component={ProfileScreen} exact></Route>
+            <PrivateRoute path = "/profile" component={ProfileScreen} exact></PrivateRoute>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}

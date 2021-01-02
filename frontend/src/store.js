@@ -4,7 +4,7 @@ import { bookingCreateReducer, bookingDetailsReducer, bookingMineListReducer, bo
 import { cartReducer } from './reducers/cartReducers';
 import { serviceDetailsReducer } from './reducers/serviceDetailsReducer';
 import { serviceListReducer } from './reducers/serviceReducers';
-import { userDetailsReducer, userRegisterReducer, userSigninReducer } from './reducers/userReducers';
+import { userDetailsReducer, userRegisterReducer, userSigninReducer, userUpdateProfileReducer } from './reducers/userReducers';
 
 const initialState = {
     userSignin: {
@@ -33,6 +33,7 @@ const reducer = combineReducers({
     bookingPay: bookingPayReducer,
     bookingMineList : bookingMineListReducer,
     userDetails: userDetailsReducer,
+    userUpdateProfile: userUpdateProfileReducer,
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
