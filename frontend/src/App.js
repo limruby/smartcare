@@ -66,7 +66,27 @@ function App() {
                     ) : (
                   <li><Link to="/signin">Sign In</Link></li>
                     )
-                  }  
+                  } 
+                  {/*ADMIN VIEW */} 
+                  {userInfo && userInfo.isAdmin && (
+                    <div className ="dropdown">
+                      <Link to = "#admin">Admin <i className="fa fa-caret-down"></i></Link>
+                      <ul className="dropdown-content">
+                        <li>
+                          <Link to="/dashboard">Dashboard</Link>
+                        </li>
+                        <li>
+                          <Link to="/servicelist">Services</Link>
+                        </li>
+                        <li>
+                          <Link to="/bookinglist">Bookings</Link>
+                        </li>
+                        <li>
+                          <Link to="/userlist">Users</Link>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
                   <li><Link to="">Contact</Link></li>
                 </ul>
               </nav>
