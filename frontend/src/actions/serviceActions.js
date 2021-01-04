@@ -8,7 +8,10 @@ import {
     SERVICE_DETAILS_SUCCESS, 
     SERVICE_LIST_FAIL,
     SERVICE_LIST_REQUEST, 
-    SERVICE_LIST_SUCCESS
+    SERVICE_LIST_SUCCESS,
+    SERVICE_UPDATE_FAILURE,
+    SERVICE_UPDATE_REQUEST,
+    SERVICE_UPDATE_SUCCESS
 } from '../constants/serviceConstants';
 
 export const listServices = () => async (dispatch) =>{
@@ -67,3 +70,21 @@ export const createService = () => async (dispatch, getState) => {
     }
   };
 
+  export const updateService = (service) => async (dispatch, getState) => {
+    dispatch({ type: SERVICE_UPDATE_REQUEST, payload: service });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.put(`/api/services/${service._id}`, service, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      dispatch({ type: SERVICE_UPDATE_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: SERVICE_UPDATE_FAILURE, error: message });
+    }
+  };

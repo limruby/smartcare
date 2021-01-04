@@ -49,4 +49,28 @@ serviceRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async(req, res) =>{
     res.send({message:'Service created', service: createdService})
 }))
 
+serviceRouter.put(
+    '/:id',
+    isAuth,
+    isAdmin,
+    expressAsyncHandler(async (req, res) => {
+      const serviceId = req.params.id;
+      const service = await Service.findById(serviceId);
+      if (service) {
+        service.name = req.body.name;
+        service.price = req.body.price;
+        service.image = req.body.image;
+        service.category = req.body.category;
+        service.schedule = req.body.schedule;
+        service.location = req.body.location;
+        service.description = req.body.description;
+        const updatedService = await service.save();
+        res.send({ message: 'Service Updated', service: updatedService });
+        console.log(service.image)
+      } else {
+        res.status(404).send({ message: 'Service Not Found' });
+      }
+    })
+  );
+
 export default serviceRouter;

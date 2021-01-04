@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { detailsServices } from '../actions/serviceActions';
+import { detailsServices, updateService } from '../actions/serviceActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { SERVICE_UPDATE_RESET } from '../constants/serviceConstants';
 
 export default function ServiceEditScreen(props) {
     const serviceId = props.match.params.id;
@@ -16,9 +17,17 @@ export default function ServiceEditScreen(props) {
 
     const serviceDetails = useSelector((state) => state.serviceDetails);
     const { loading, error, service } = serviceDetails;
+
+    const serviceUpdate = useSelector((state) => state.serviceUpdate);
+    const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = serviceUpdate;
+
     const dispatch = useDispatch();
     useEffect(() => {
-        if (!service || (service._id !== serviceId)) {
+        if(successUpdate) {
+            props.history.push('/servicelist');
+        }
+        if (!service || service._id !== serviceId || successUpdate) {
+            dispatch({type: SERVICE_UPDATE_RESET});
             dispatch(detailsServices(serviceId));
         } else {
             setName(service.name);
@@ -29,10 +38,21 @@ export default function ServiceEditScreen(props) {
             setLocation(service.location);
             setDescription(service.description);
         }
-    }, [dispatch, service, serviceId])
+    }, [dispatch, props.history, service, serviceId, successUpdate])
     const submitHandler = (e) => {
         e.preventDefault();
         // dispatch update service
+        dispatch(updateService({
+            _id: serviceId,
+            name,
+            price,
+            image,
+            category,
+            schedule,
+            location,
+            description,
+        })
+        )
     }
 
     return (
@@ -40,6 +60,8 @@ export default function ServiceEditScreen(props) {
             {/*Start coding */}
             <form onSubmit={submitHandler}>
                 <div><h1>Edit Service {serviceId} </h1></div>
+                {loadingUpdate && <LoadingBox></LoadingBox>}
+                {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
                 {loading ? (
                     <LoadingBox></LoadingBox>
                 ) : error ? (

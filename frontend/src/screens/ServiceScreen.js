@@ -62,7 +62,7 @@ export default function ServiceScreen(props) {
                   src={services.image}
                   width="100%"
                   className="small-img"
-                  id="productImg"
+                  id="serviceImg"
                   alt="more pictures"
                 />
                 <div className="small-img-row">
