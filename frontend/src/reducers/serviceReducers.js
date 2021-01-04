@@ -13,10 +13,7 @@ export const serviceListReducer = (state ={ loading: true, services: []}, action
     }
 }
 
-export const serviceDetailsReducer = (
-    state = { service: {}, loading: true },
-    action
-  ) => {
+export const serviceDetailsReducer = ( state = { loading: true }, action) => {
     switch (action.type) {
       case SERVICE_DETAILS_REQUEST:
         return { loading: true };

@@ -13,6 +13,7 @@ import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceBookingScreen from './screens/PlaceBookingScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ServiceEditScreen from './screens/ServiceEditScreen';
 import ServiceListScreen from './screens/ServiceListScreen';
 import ServiceScreen from './screens/ServiceScreen';
 import SigninScreen from './screens/SigninScreen';
@@ -106,6 +107,7 @@ function App() {
         <main>
             <Route path = "/cart/:id?" component={CartScreen}></Route>
             <Route path = "/service/:id" component={ServiceScreen} exact></Route>
+            <Route path = "/service/:id/edit" component={ServiceEditScreen} exact></Route>
             <Route path = "/signin" component={SigninScreen}></Route>
             <Route path = "/register" component={RegisterScreen}></Route>
             <Route path = "/shipping" component={CheckoutScreen}></Route>
