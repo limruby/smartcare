@@ -1,5 +1,8 @@
 import Axios from 'axios';
 import {
+    SERVICE_CREATE_FAILURE,
+    SERVICE_CREATE_REQUEST,
+    SERVICE_CREATE_SUCCESS,
     SERVICE_DETAILS_FAIL,
     SERVICE_DETAILS_REQUEST,
     SERVICE_DETAILS_SUCCESS, 
@@ -24,7 +27,7 @@ export const listServices = () => async (dispatch) =>{
 export const detailsServices = (serviceID) => async (dispatch) =>{
     dispatch({type: SERVICE_DETAILS_REQUEST, payload: serviceID,});
     try {
-        const { data } = await Axios.get(`/api/services/${serviceID}`);
+    const { data } = await Axios.get(`/api/services/${serviceID}`);
     dispatch({ type: SERVICE_DETAILS_SUCCESS, payload: data });
     
     }catch(error){
@@ -37,4 +40,30 @@ export const detailsServices = (serviceID) => async (dispatch) =>{
         });
     }
 };
+
+export const createService = () => async (dispatch, getState) => {
+    dispatch({ type: SERVICE_CREATE_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.post(
+        '/api/services',
+        {},
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({
+        type: SERVICE_CREATE_SUCCESS,
+        payload: data.service,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: SERVICE_CREATE_FAILURE, payload: message });
+    }
+  };
 

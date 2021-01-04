@@ -104,17 +104,17 @@ function App() {
       <div className="small-container">  
       <h1>Our Service</h1>
         <main>
-            <Route path = "/cart/:id?" component={CartScreen} exact></Route>
+            <Route path = "/cart/:id?" component={CartScreen}></Route>
             <Route path = "/service/:id" component={ServiceScreen} exact></Route>
-            <Route path = "/signin" component={SigninScreen} exact></Route>
-            <Route path = "/register" component={RegisterScreen} exact></Route>
-            <Route path = "/shipping" component={CheckoutScreen} exact></Route>
-            <Route path = "/payment" component={PaymentMethodScreen} exact></Route>
-            <Route path = "/placebooking" component={PlaceBookingScreen} exact></Route>
-            <Route path = "/booking/:id" component={BookingScreen} exact></Route>
-            <Route path = "/bookingHistory" component={BookingHistoryScreen} exact></Route>
-            <PrivateRoute path = "/profile" component={ProfileScreen} exact></PrivateRoute>
-            <AdminRoute path ="/servicelist" component={ServiceListScreen} exact></AdminRoute>
+            <Route path = "/signin" component={SigninScreen}></Route>
+            <Route path = "/register" component={RegisterScreen}></Route>
+            <Route path = "/shipping" component={CheckoutScreen}></Route>
+            <Route path = "/payment" component={PaymentMethodScreen}></Route>
+            <Route path = "/placebooking" component={PlaceBookingScreen}></Route>
+            <Route path = "/booking/:id" component={BookingScreen}></Route>
+            <Route path = "/bookingHistory" component={BookingHistoryScreen}></Route>
+            <PrivateRoute path = "/profile" component={ProfileScreen}></PrivateRoute>
+            <AdminRoute path ="/servicelist" component={ServiceListScreen}></AdminRoute>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}
