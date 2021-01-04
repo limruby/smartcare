@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { detailsServices, updateService } from '../actions/serviceActions';
@@ -23,11 +24,11 @@ export default function ServiceEditScreen(props) {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        if(successUpdate) {
+        if (successUpdate) {
             props.history.push('/servicelist');
         }
         if (!service || service._id !== serviceId || successUpdate) {
-            dispatch({type: SERVICE_UPDATE_RESET});
+            dispatch({ type: SERVICE_UPDATE_RESET });
             dispatch(detailsServices(serviceId));
         } else {
             setName(service.name);
@@ -53,6 +54,30 @@ export default function ServiceEditScreen(props) {
             description,
         })
         )
+    }
+    const [loadingUpload, setLoadingUpload] = useState(false)
+    const [errorUpload, setErrorUpload] = useState('')
+
+    const userSignin = useSelector((state) => state.userSignin)
+    const { userInfo } = userSignin;
+    const uploadFileHandler = async (e) => {
+        const file = e.target.files[0];
+        const bodyFormData = new FormData();
+        bodyFormData.append('image', file)
+        setLoadingUpload(true);
+        try {
+            const { data } = await Axios.post('/api/uploads', bodyFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${userInfo.token}`,
+                }
+            })
+            setImage(data)
+            setLoadingUpload(false)
+        } catch (error) {
+            setErrorUpload(error.message);
+            setLoadingUpload(false)
+        }
     }
 
     return (
@@ -99,6 +124,19 @@ export default function ServiceEditScreen(props) {
                                     ></input>
                                 </div>
                                 <div>
+                                    <label htmlFor="imageFile">Image File</label>
+                                    <input
+                                        type="file"
+                                        id="imageFile"
+                                        label="Choose Image"
+                                        onChange={uploadFileHandler}
+                                    ></input>
+                                    {loadingUpload && <LoadingBox></LoadingBox>}
+                                    {errorUpload && (
+                                        <MessageBox variant="danger">{errorUpload}</MessageBox>
+                                    )}
+                                </div>
+                                <div>
                                     <label htmlFor="category">Category</label>
                                     <input
                                         id="category"
@@ -113,7 +151,7 @@ export default function ServiceEditScreen(props) {
                                     <input
                                         id="schedule"
                                         type="text"
-                                        name = "schedule[]"
+                                        name="schedule[]"
                                         placeholder="Enter schedule"
                                         value={schedule}
                                         onChange={(e) => setSchedule(e.target.value)}
