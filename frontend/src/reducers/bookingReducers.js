@@ -13,6 +13,9 @@ import {
     BOOKING_MINE_LIST_REQUEST,
     BOOKING_MINE_LIST_SUCCESS,
     BOOKING_MINE_LIST_FAILURE,
+    BOOKING_LIST_REQUEST,
+    BOOKING_LIST_SUCCESS,
+    BOOKING_LIST_FAILURE,
   } from '../constants/bookingConstants';
   
   export const bookingCreateReducer = (state = {}, action) => {
@@ -65,6 +68,19 @@ import {
       case BOOKING_MINE_LIST_SUCCESS:
         return { loading: false, bookings: action.payload };
       case BOOKING_MINE_LIST_FAILURE:
+        return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
+  };
+
+  export const bookingListReducer = (state = { bookings: [] }, action) => {
+    switch (action.type) {
+      case BOOKING_LIST_REQUEST:
+        return { loading: true };
+      case BOOKING_LIST_SUCCESS:
+        return { loading: false, bookings: action.payload };
+      case BOOKING_LIST_FAILURE:
         return { loading: false, error: action.payload };
       default:
         return state;

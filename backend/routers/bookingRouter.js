@@ -1,10 +1,18 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Booking from '../models/bookingModel.js';
-import { isAuth } from '../utils.js';
+import { isAuth, isAdmin } from '../utils.js';
 
 const bookingRouter = express.Router();
-
+bookingRouter.get(
+  '/',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const bookings = await Booking.find({}).populate('user', 'name');
+    res.send(bookings);
+  })
+);
 bookingRouter.get(
   '/mine',
   isAuth,

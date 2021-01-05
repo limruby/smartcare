@@ -5,6 +5,7 @@ import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
 import BookingHistoryScreen from './screens/BookingHistoryScreen';
+import BookingListScreen from './screens/BookingListScreen';
 import BookingScreen from './screens/BookingScreen';
 import CartScreen from './screens/CartScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
@@ -117,6 +118,7 @@ function App() {
             <Route path = "/bookingHistory" component={BookingHistoryScreen}></Route>
             <PrivateRoute path = "/profile" component={ProfileScreen}></PrivateRoute>
             <AdminRoute path ="/servicelist" component={ServiceListScreen}></AdminRoute>
+            <AdminRoute path="/bookinglist" component={BookingListScreen}></AdminRoute>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}

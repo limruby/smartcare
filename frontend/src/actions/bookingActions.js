@@ -13,6 +13,9 @@ import {
   BOOKING_MINE_LIST_REQUEST,
   BOOKING_MINE_LIST_SUCCESS,
   BOOKING_MINE_LIST_FAILURE,
+  BOOKING_LIST_REQUEST,
+  BOOKING_LIST_SUCCESS,
+  BOOKING_LIST_FAILURE,
 } from '../constants/bookingConstants';
 
 export const createBooking = (booking) => async (dispatch, getState) => {
@@ -99,5 +102,25 @@ export const listBookingMine = () => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: BOOKING_MINE_LIST_FAILURE, payload: message });
+  }
+};
+
+export const listBookings = () => async (dispatch, getState) => {
+  dispatch({ type: BOOKING_LIST_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.get('/api/bookings', {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    console.log(data);
+    dispatch({ type: BOOKING_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: BOOKING_LIST_FAILURE, payload: message });
   }
 };
