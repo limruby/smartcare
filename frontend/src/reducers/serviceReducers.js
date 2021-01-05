@@ -13,18 +13,18 @@ export const serviceListReducer = (state ={ loading: true, services: []}, action
     }
 }
 
-export const serviceDetailsReducer = ( state = { loading: true }, action) => {
-    switch (action.type) {
+export const serviceDetailsReducer = (state = { loading: true }, action) => {
+  switch(action.type){
       case SERVICE_DETAILS_REQUEST:
-        return { loading: true };
+          return {loading: true};
       case SERVICE_DETAILS_SUCCESS:
-        return { loading: false, service: action.payload };
+          return {loading: false, services: action.payload };
       case SERVICE_DETAILS_FAIL:
-        return { loading: false, error: action.payload };
+          return {loading: false, error: action.payload};
       default:
-        return state;
-    }
-  };
+          return state;
+  }
+}
   export const serviceCreateReducer = (state = {}, action) => {
     switch (action.type) {
       case SERVICE_CREATE_REQUEST:
