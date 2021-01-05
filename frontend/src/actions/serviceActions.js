@@ -11,7 +11,10 @@ import {
     SERVICE_LIST_SUCCESS,
     SERVICE_UPDATE_FAILURE,
     SERVICE_UPDATE_REQUEST,
-    SERVICE_UPDATE_SUCCESS
+    SERVICE_UPDATE_SUCCESS,
+    SERVICE_DELETE_REQUEST,
+    SERVICE_DELETE_SUCCESS,
+    SERVICE_DELETE_FAIL,
 } from '../constants/serviceConstants';
 
 export const listServices = () => async (dispatch) =>{
@@ -86,5 +89,25 @@ export const createService = () => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message;
       dispatch({ type: SERVICE_UPDATE_FAILURE, error: message });
+    }
+  };
+
+  export const deleteService = (serviceId) => async (dispatch, getState) => {
+    dispatch({ type: SERVICE_DELETE_REQUEST, payload: serviceId });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const { data } = Axios.delete(`/api/services/${serviceId}`, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      dispatch({ type: SERVICE_DELETE_SUCCESS });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: SERVICE_DELETE_FAIL, payload: message });
     }
   };
