@@ -19,6 +19,9 @@ import {
   BOOKING_DELETE_REQUEST,
   BOOKING_DELETE_SUCCESS,
   BOOKING_DELETE_FAILURE,
+  BOOKING_DELIVER_REQUEST,
+  BOOKING_DELIVER_SUCCESS,
+  BOOKING_DELIVER_FAILURE,
 } from '../constants/bookingConstants';
 
 export const createBooking = (booking) => async (dispatch, getState) => {
@@ -144,5 +147,28 @@ export const deleteBooking = (bookingId) => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: BOOKING_DELETE_FAILURE, payload: message });
+  }
+};
+
+export const deliverBooking = (bookingId) => async (dispatch, getState) => {
+  dispatch({ type: BOOKING_DELIVER_REQUEST, payload: bookingId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = Axios.put(
+      `/api/bookings/${bookingId}/deliver`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      }
+    );
+    dispatch({ type: BOOKING_DELIVER_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: BOOKING_DELIVER_FAILURE, payload: message });
   }
 };

@@ -96,4 +96,22 @@ bookingRouter.delete(
   })
 );
 
+bookingRouter.put(
+  '/:id/deliver',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const booking = await Booking.findById(req.params.id);
+    if (booking) {
+      booking.isDelivered = true;
+      booking.deliveredAt = Date.now();
+
+      const updatedBooking = await booking.save();
+      res.send({ message: 'Booking Delivered', booking: updatedBooking });
+    } else {
+      res.status(404).send({ message: 'Booking Not Found' });
+    }
+  })
+);
+
 export default bookingRouter;

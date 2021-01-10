@@ -3,19 +3,25 @@ import { PayPalButton } from 'react-paypal-button-v2'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { detailsBooking, payBooking } from '../actions/bookingActions';
+import { deliverBooking, detailsBooking, payBooking } from '../actions/bookingActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { BOOKING_PAY_RESET } from '../constants/bookingConstants';
+import { BOOKING_DELIVER_RESET, BOOKING_PAY_RESET } from '../constants/bookingConstants';
 
 export default function BookingScreen(props) {
     const bookingId = props.match.params.id;
     const [sdkReady, setSdkReady] = useState(false);
     const bookingDetails = useSelector((state) => state.bookingDetails);
     const { booking, loading, error } = bookingDetails;
+    const userSignin = useSelector((state) => state.userSignin)
+    const { userInfo } = userSignin;
 
     const bookingPay = useSelector((state) => state.bookingPay);
     const { loading: loadingPay, error: errorPay, success: successPay } = bookingPay;
+
+    const bookingDeliver = useSelector((state) => state.bookingDeliver);
+    const { loading: loadingDeliver, error: errorDeliver, success: successDeliver } = bookingDeliver;
+
     const dispatch = useDispatch();
     useEffect(() => {
         const addPayPalScript = async () => {
@@ -29,8 +35,9 @@ export default function BookingScreen(props) {
             }
             document.body.appendChild(script);
         }
-        if (!booking || successPay || (booking && booking._id !== bookingId)) {
+        if (!booking || successPay || successDeliver || (booking && booking._id !== bookingId)) {
             dispatch({ type: BOOKING_PAY_RESET })
+            dispatch({ type: BOOKING_DELIVER_RESET })
             dispatch(detailsBooking(bookingId));
         } else {
             if (!booking.isPaid) {
@@ -41,11 +48,14 @@ export default function BookingScreen(props) {
                 }
             }
         }
-    }, [booking, bookingId, dispatch, sdkReady, successPay]);
+    }, [booking, bookingId, dispatch, sdkReady, successPay, successDeliver]);
 
     const successPaymentHandler = (paymentResult) => {
         // dispatch pay booking
         dispatch(payBooking(booking, paymentResult));
+    }
+    const deliverHandler = () => {
+        dispatch(deliverBooking(booking._id));
     }
 
     return loading ? (<LoadingBox></LoadingBox>) :
@@ -176,19 +186,27 @@ export default function BookingScreen(props) {
                                                 {!sdkReady ? (
                                                     <LoadingBox></LoadingBox>
                                                 ) : (
-                                                    <>
-                                                    {errorPay && (<MessageBox variant="danger">{errorPay}</MessageBox>)}
-                                                    {loadingPay && <LoadingBox></LoadingBox>}
+                                                        <>
+                                                            {errorPay && (<MessageBox variant="danger">{errorPay}</MessageBox>)}
+                                                            {loadingPay && <LoadingBox></LoadingBox>}
 
-                                                        <PayPalButton
-                                                            amount={booking.totalPrice}
-                                                            onSuccess={successPaymentHandler}
-                                                        ></PayPalButton>
+                                                            <PayPalButton
+                                                                amount={booking.totalPrice}
+                                                                onSuccess={successPaymentHandler}
+                                                            ></PayPalButton>
                                                         </>
                                                     )}
                                             </li>
-                                        )
-                                    }
+                                        )}
+                                    {userInfo.isAdmin && booking.isPaid && !booking.isDelivered && (
+                                        <li>
+                                            {loadingDeliver && <LoadingBox></LoadingBox>}
+                                            {errorDeliver && (
+                                                <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                                            )}
+                                            <button type="button" className="btn" onClick={deliverHandler}>Deliver Booking</button>
+                                        </li>
+                                    )}
                                 </ul>
                             </div>
                         </div>
