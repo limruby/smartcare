@@ -54,7 +54,7 @@ bookingRouter.get(
     if (booking) {
       res.send(booking);
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({ message: 'Booking Not Found' });
     }
   })
 );
@@ -75,6 +75,21 @@ bookingRouter.put(
       };
       const updatedBooking = await booking.save();
       res.send({ message: 'Booking Paid', booking: updatedBooking });
+    } else {
+      res.status(404).send({ message: 'Booking Not Found' });
+    }
+  })
+);
+
+bookingRouter.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const booking = await Booking.findById(req.params.id);
+    if (booking) {
+      const deleteBooking = await booking.remove();
+      res.send({ message: 'Booking Deleted', booking: deleteBooking});
     } else {
       res.status(404).send({ message: 'Booking Not Found' });
     }

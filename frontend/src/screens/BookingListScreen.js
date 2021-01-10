@@ -1,23 +1,31 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { listBookings } from '../actions/bookingActions';
+import { deleteBooking, listBookings } from '../actions/bookingActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { BOOKING_DELETE_RESET } from '../constants/bookingConstants';
 
 export default function BookingListScreen(props) {
     const bookingList = useSelector((state) => state.bookingList)
     const { loading, error, bookings } = bookingList;
+    const bookingDelete = useSelector((state) => state.bookingDelete)
+    const { loading: loadingDelete, error: errorDelete, success: successDelete } = bookingDelete;
     const dispatch = useDispatch();
     useEffect(() => {
+        dispatch({type: BOOKING_DELETE_RESET})
         dispatch(listBookings());
-    }, [dispatch])
+    }, [dispatch, successDelete])
     const deleteHandler = (booking) => {
-
+        if(window.confirm('Are you sure to delete?')){
+            dispatch(deleteBooking(booking._id));
+        }
     }
     return (
         <div>
             {/*Start Coding */}
             <h1>Appointments</h1>
+            {loadingDelete && <LoadingBox></LoadingBox>}
+            {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
             <br />
             {loading ? (
                 <LoadingBox></LoadingBox>

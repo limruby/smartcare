@@ -27,7 +27,7 @@ export default function ServiceListScreen(props) {
         if(successDelete){
             dispatch({type: SERVICE_DELETE_RESET})
         }
-        dispatch(listServices);
+        dispatch(listServices());
     }, [createdService, dispatch, props.history, successCreate, successDelete])
     const deleteHandler = (service) =>{
         if(window.confirm('Are you sure to delete?')){
