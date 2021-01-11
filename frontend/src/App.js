@@ -105,7 +105,7 @@ function App() {
             </div>
                 {/*-------------------FEATURE CATEGORIES-----------------*/}
       <div className="small-container">  
-      <h1>Our Service</h1>
+      
         <main>
             <Route path = "/cart/:id?" component={CartScreen}></Route>
             <Route path = "/service/:id" component={ServiceScreen} exact></Route>

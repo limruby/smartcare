@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { bookingCreateReducer, bookingDeleteReducer, bookingDeliverReducer, bookingDetailsReducer, bookingListReducer, bookingMineListReducer, bookingPayReducer } from './reducers/bookingReducers';
 import { cartReducer } from './reducers/cartReducers';
 import { serviceListReducer, serviceDetailsReducer, serviceCreateReducer, serviceUpdateReducer, serviceDeleteReducer } from './reducers/serviceReducers';
-import { userDetailsReducer, userListReducer, userRegisterReducer, userSigninReducer, userUpdateProfileReducer } from './reducers/userReducers';
+import { userDeleteReducer, userDetailsReducer, userListReducer, userRegisterReducer, userSigninReducer, userUpdateProfileReducer } from './reducers/userReducers';
 
 const initialState = {
     userSignin: {
@@ -40,6 +40,7 @@ const reducer = combineReducers({
     bookingDelete: bookingDeleteReducer,
     bookingDeliver: bookingDeliverReducer,
     userList: userListReducer,
+    userDelete: userDeleteReducer,
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

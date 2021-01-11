@@ -16,6 +16,7 @@ export default function HomeScreen(){
 
     return (
       <div>
+         <h1>Our Service</h1>
         {loading? (<LoadingBox></LoadingBox>)
         :
         error? (<MessageBox variant ="danger">{error}</MessageBox>)
