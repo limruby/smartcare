@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, listUsers } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { USER_DETAILS_RESET } from '../constants/userConstants';
 
-export default function UserListScreen() {
+export default function UserListScreen(props) {
     const userList = useSelector((state) => state.userList);
     const { loading, error, users } = userList;
 
@@ -14,6 +15,9 @@ export default function UserListScreen() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(listUsers());
+        dispatch({
+            type:USER_DETAILS_RESET
+        })
     }, [dispatch, successDelete]);
     const deleteHandler = (user) => {
         if(window.confirm('Are you sure you want to delete this user?')){
@@ -55,7 +59,7 @@ export default function UserListScreen() {
                                         <td>{user.isSeller ? 'YES' : ' NO'}</td>
                                         <td>{user.isAdmin ? 'YES' : 'NO'}</td>
                                         <td>
-                                            <button className="btn">Edit</button>
+                                            <button type="button" className="btn" onClick={() => props.history.push(`/user/${user._id}/edit`)}>Edit</button>
                                             <button type="button" className="btn" onClick={() => deleteHandler(user)}>Delete</button>
                                         </td>
                                     </tr>
