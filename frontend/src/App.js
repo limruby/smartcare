@@ -18,6 +18,7 @@ import ServiceEditScreen from './screens/ServiceEditScreen';
 import ServiceListScreen from './screens/ServiceListScreen';
 import ServiceScreen from './screens/ServiceScreen';
 import SigninScreen from './screens/SigninScreen';
+import UserListScreen from './screens/UserListScreen';
 
 
 function App() {
@@ -119,6 +120,7 @@ function App() {
             <PrivateRoute path = "/profile" component={ProfileScreen}></PrivateRoute>
             <AdminRoute path ="/servicelist" component={ServiceListScreen}></AdminRoute>
             <AdminRoute path="/bookinglist" component={BookingListScreen}></AdminRoute>
+            <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
             <Route path = "/" component={HomeScreen} exact></Route>
             </main>         
           {/*-----------FOOTER--------------*/}
