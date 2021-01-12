@@ -15,6 +15,7 @@ import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceBookingScreen from './screens/PlaceBookingScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import SellerScreen from './screens/SellerScreen';
 import ServiceEditScreen from './screens/ServiceEditScreen';
 import ServiceListScreen from './screens/ServiceListScreen';
 import ServiceScreen from './screens/ServiceScreen';
@@ -123,6 +124,7 @@ function App() {
         <div className="small-container">
 
           <main>
+            <Route path="/seller/:id" component={SellerScreen}></Route>
             <Route path="/cart/:id?" component={CartScreen}></Route>
             <Route path="/service/:id" component={ServiceScreen} exact></Route>
             <Route path="/service/:id/edit" component={ServiceEditScreen} exact></Route>

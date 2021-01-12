@@ -144,12 +144,21 @@ export default function ServiceScreen(props) {
                     </button>
                   </div>
                 )}
-
-                <h3>
+                <div className="row-3">
+                  <h2>Service Provider{''}</h2>
+                  <br />
+                  <h3>
+                    <Link to={`/seller/${services.seller._id}`}>{services.seller.seller.name}</Link>
+                  </h3>
+                  <Rating rating={services.seller.seller.rating} numReviews={services.seller.seller.numReviews}></Rating>
+                </div>
+                <div className="row-3">
+                <h2>
                   Service Details <i className="fa fa-indent" />
-                </h3>
+                </h2>
                 <br />
                 <p>{services.description}</p>
+                </div>
               </div>
             </div>
           </div>

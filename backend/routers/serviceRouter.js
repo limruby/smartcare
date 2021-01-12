@@ -9,7 +9,10 @@ const serviceRouter = express.Router();
 serviceRouter.get('/', expressAsyncHandler(async(req, res)=>{
     const seller = req.query.seller || '';
     const sellerFilter = seller ? { seller } : {};
-    const services = await Service.find({...sellerFilter});
+    const services = await Service.find({...sellerFilter}).populate(
+      'seller',
+      'seller.name'
+    );
     res.send(services);
 })
 );
@@ -25,7 +28,10 @@ serviceRouter.get(
 );
 
 serviceRouter.get('/:id', expressAsyncHandler(async(req, res)=>{
-    const service = await Service.findById(req.params.id);
+    const service = await Service.findById(req.params.id).populate(
+      'seller',
+      'seller.name seller.rating seller.numReviews'
+    );
     if(service){
         res.send(service);
     }else{
