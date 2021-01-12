@@ -1,15 +1,17 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Booking from '../models/bookingModel.js';
-import { isAuth, isAdmin } from '../utils.js';
+import { isAuth, isAdmin, isSellerOrAdmin } from '../utils.js';
 
 const bookingRouter = express.Router();
 bookingRouter.get(
   '/',
   isAuth,
-  isAdmin,
+  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    const bookings = await Booking.find({}).populate('user', 'name');
+    const seller = req.query.seller || '';
+    const sellerFilter = seller ? { seller } : {};
+    const bookings = await Booking.find({...sellerFilter}).populate('user', 'name');
     res.send(bookings);
   })
 );
@@ -30,6 +32,7 @@ bookingRouter.post(
       res.status(400).send({ message: 'Cart is empty' });
     } else {
       const booking = new Booking({
+        seller: req.body.bookingItems[0].seller,
         bookingItems: req.body.bookingItems,
         customerAddress: req.body.customerAddress,
         paymentMethod: req.body.paymentMethod,

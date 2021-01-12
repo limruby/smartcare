@@ -6,11 +6,14 @@ import MessageBox from '../components/MessageBox';
 import { SERVICE_CREATE_RESET, SERVICE_DELETE_RESET } from '../constants/serviceConstants';
 
 export default function ServiceListScreen(props) {
+    const sellerMode = props.match.path.indexOf('/seller')>=0;
     const serviceList = useSelector((state) => state.serviceList);
     const { loading, error, services } = serviceList;
 
     const serviceCreate = useSelector((state) => state.serviceCreate);
     const { loading: loadingCreate, error: errorCreate, success: successCreate, service: createdService} = serviceCreate;
+    const userSignin = useSelector((state) => state.userSignin)
+    const { userInfo } = userSignin
     const dispatch = useDispatch();
     const serviceDelete = useSelector((state) => state.serviceDelete)
     const {
@@ -27,8 +30,8 @@ export default function ServiceListScreen(props) {
         if(successDelete){
             dispatch({type: SERVICE_DELETE_RESET})
         }
-        dispatch(listServices());
-    }, [createdService, dispatch, props.history, successCreate, successDelete])
+        dispatch(listServices({seller: sellerMode ? userInfo._id:''}));
+    }, [createdService, dispatch, props.history, sellerMode, successCreate, successDelete, userInfo._id])
     const deleteHandler = (service) =>{
         if(window.confirm('Are you sure to delete?')){
         //dispatch delete action

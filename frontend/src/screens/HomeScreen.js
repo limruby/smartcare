@@ -11,7 +11,7 @@ export default function HomeScreen(){
   const { loading, error, services } = serviceList;
 
   useEffect(() =>{
-    dispatch(listServices());
+    dispatch(listServices({}));
   }, [dispatch])
 
     return (

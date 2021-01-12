@@ -111,13 +111,13 @@ export const listBookingMine = () => async (dispatch, getState) => {
   }
 };
 
-export const listBookings = () => async (dispatch, getState) => {
+export const listBookings = ({seller=''}) => async (dispatch, getState) => {
   dispatch({ type: BOOKING_LIST_REQUEST });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get('/api/bookings', {
+    const { data } = await Axios.get(`/api/bookings?seller=${seller}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     console.log(data);

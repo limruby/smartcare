@@ -6,15 +6,18 @@ import MessageBox from '../components/MessageBox';
 import { BOOKING_DELETE_RESET } from '../constants/bookingConstants';
 
 export default function BookingListScreen(props) {
+    const sellerMode = props.match.path.indexOf('/seller')>=0;
     const bookingList = useSelector((state) => state.bookingList)
     const { loading, error, bookings } = bookingList;
     const bookingDelete = useSelector((state) => state.bookingDelete)
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = bookingDelete;
+    const userSignin = useSelector((state) => state.userSignin)
+    const { userInfo } = userSignin
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({type: BOOKING_DELETE_RESET})
-        dispatch(listBookings());
-    }, [dispatch, successDelete])
+        dispatch(listBookings({seller: sellerMode ? userInfo._id:''}));
+    }, [dispatch, sellerMode, successDelete, userInfo._id])
     const deleteHandler = (booking) => {
         if(window.confirm('Are you sure to delete?')){
             dispatch(deleteBooking(booking._id));

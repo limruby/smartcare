@@ -2,12 +2,14 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js';
 import Service from '../models/serviceModel.js';
-import { isAuth, isAdmin } from '../utils.js';
+import { isAuth, isAdmin, isSellerOrAdmin } from '../utils.js';
 
 const serviceRouter = express.Router();
 
 serviceRouter.get('/', expressAsyncHandler(async(req, res)=>{
-    const services = await Service.find({});
+    const seller = req.query.seller || '';
+    const sellerFilter = seller ? { seller } : {};
+    const services = await Service.find({...sellerFilter});
     res.send(services);
 })
 );
@@ -31,9 +33,10 @@ serviceRouter.get('/:id', expressAsyncHandler(async(req, res)=>{
     }
 }))
 
-serviceRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async(req, res) =>{
+serviceRouter.post('/', isAuth, isAdmin, isSellerOrAdmin, expressAsyncHandler(async(req, res) =>{
     const service = new Service({
         name:'sample name' + Date.now(),
+        seller: req.user._id,
         image:'/images/nurse1.png',
         price: 0,
         category:'sample category',
@@ -52,7 +55,7 @@ serviceRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async(req, res) =>{
 serviceRouter.put(
     '/:id',
     isAuth,
-    isAdmin,
+    isSellerOrAdmin,
     expressAsyncHandler(async (req, res) => {
       const serviceId = req.params.id;
       const service = await Service.findById(serviceId);

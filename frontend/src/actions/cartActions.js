@@ -15,6 +15,8 @@ export const addToCart = (serviceID, scheduleSlot) => async(
             price: data.price,
             schedule: data.schedule,
             service: data._id,
+            // make sure user can only book service from one seller
+            seller: data.seller,
             scheduleSlot,
         },
     });
