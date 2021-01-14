@@ -284,6 +284,10 @@ h4{
 .col-5 img:hover{
   filter: grayscale(0%);
 }
+/*------CAROUSEL----*/
+.carousel .slide img {
+  max-width: 30rem;
+}
 /*---FOOTER------*/
 .footer{
   background: #000;

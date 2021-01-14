@@ -21,6 +21,9 @@ import {
   USER_DELETE_FAILURE,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAILURE,
+  USER_TOPSELLERS_LIST_REQUEST,
+  USER_TOPSELLERS_LIST_SUCCESS,
+  USER_TOPSELLERS_LIST_FAILURE,
 } from "../constants/userConstants"
 
 export const signin = (email, password) => async (dispatch) => {
@@ -160,5 +163,19 @@ export const updateUser = (user) => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: USER_UPDATE_FAILURE, payload: message });
+  }
+};
+
+export const listTopSellers = () => async (dispatch) => {
+  dispatch({ type: USER_TOPSELLERS_LIST_REQUEST });
+  try {
+    const { data } = await Axios.get('/api/users/top-sellers');
+    dispatch({ type: USER_TOPSELLERS_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_TOPSELLERS_LIST_FAILURE, payload: message });
   }
 };
