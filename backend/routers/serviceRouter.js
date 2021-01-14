@@ -8,15 +8,25 @@ const serviceRouter = express.Router();
 
 serviceRouter.get('/', expressAsyncHandler(async(req, res)=>{
     const name = req.query.name || '';
+    const category = req.query.category || '';
     const seller = req.query.seller || '';
     const nameFilter = name ? { name:{ $regex: name, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};
-    const services = await Service.find({...sellerFilter, ...nameFilter}).populate(
+    const categoryFilter = category ? { category } : {};
+    const services = await Service.find({...sellerFilter, ...nameFilter, ...categoryFilter}).populate(
       'seller',
       'seller.name',
     );  
     res.send(services);
 })
+);
+
+serviceRouter.get(
+  '/categories',
+  expressAsyncHandler(async (req, res) => {
+    const categories = await Service.find().distinct('category');
+    res.send(categories);
+  })
 );
 
 serviceRouter.get(

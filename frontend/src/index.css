@@ -11,7 +11,7 @@ body{
 }
 
 main{
-  padding: 1rem;
+  padding: 0.5rem;
   
 }
 
@@ -76,8 +76,7 @@ margin-left: 0.2rem;
   border-radius:  20px;
   padding: 5px;
   box-shadow: rgba(0,0,0,.172549) 0 6px 12px 0;
-  cursor: pointer;
-  
+  cursor: pointer; 
 }
 .search-element {
   display: flex;
@@ -134,7 +133,7 @@ p{
   color:#555;
 }
 .container{
-  max-width: 1300px;
+  max-width: 1500px;
   margin:auto;
   padding-left: 25px;
   padding-right: 25px;
@@ -193,7 +192,44 @@ p{
 .col-3 img{
   width: 100%;
 }
-.small-container{ /* CONTAINER TO PUT SERVICES PICS */ 
+/* ASIDE CATEGORY SIDE BAR */
+aside {
+  position: fixed;
+  width: 20rem;
+  height: 60%;
+  background-color: #fff;
+  z-index: 100;
+  transform: translateX(-60rem);
+  transition: all 0.5s;
+}
+aside.open {
+  transform: translateX(-20rem);
+}
+button.open-sidebar {
+  font-size: 3rem;
+  padding: 0.2rem 0.5rem;
+  margin: 0 0.5rem;
+  background: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+button.open-sidebar:hover {
+  background-color:  #ff523b;
+}
+aside ul {
+  padding: 0;
+  list-style: none;
+}
+aside li {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+button.close-sidebar {
+  padding: 0.3rem 0.8rem;
+}
+/* CONTAINER TO PUT SERVICES PICS */ 
+.small-container{ 
   max-width: 1080px;
   margin: auto;
 }

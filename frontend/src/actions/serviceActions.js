@@ -15,19 +15,34 @@ import {
     SERVICE_DELETE_REQUEST,
     SERVICE_DELETE_SUCCESS,
     SERVICE_DELETE_FAIL,
+    SERVICE_CATEGORY_LIST_REQUEST,
+    SERVICE_CATEGORY_LIST_SUCCESS,
+    SERVICE_CATEGORY_LIST_FAILURE,
 } from '../constants/serviceConstants';
 
-export const listServices = ({seller='', name=''}) => async (dispatch) =>{
+export const listServices = ({seller='', name='', category=''}) => async (dispatch) =>{
     dispatch({
         type: SERVICE_LIST_REQUEST
     });
     try {
-        const { data } = await Axios.get(`/api/services?seller=${seller}&name=${name}`);
+        const { data } = await Axios.get(`/api/services?seller=${seller}&name=${name}&category=${category}`);
         dispatch({type: SERVICE_LIST_SUCCESS, payload: data});
 
     }catch(error){
         dispatch({type: SERVICE_LIST_FAIL, payload: error.message });
     }
+};
+
+export const listServiceCategories = () => async (dispatch) => {
+  dispatch({
+    type: SERVICE_CATEGORY_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/services/categories`);
+    dispatch({ type: SERVICE_CATEGORY_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: SERVICE_CATEGORY_LIST_FAILURE, payload: error.message });
+  }
 };
 
 export const detailsServices = (serviceID) => async (dispatch) =>{
