@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
+import SearchBox from './components/SearchBox';
 import SellerRoute from './components/SellerRoute';
 import BookingHistoryScreen from './screens/BookingHistoryScreen';
 import BookingListScreen from './screens/BookingListScreen';
@@ -15,6 +16,7 @@ import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceBookingScreen from './screens/PlaceBookingScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import SearchScreen from './screens/SearchScreen';
 import SellerScreen from './screens/SellerScreen';
 import ServiceEditScreen from './screens/ServiceEditScreen';
 import ServiceListScreen from './screens/ServiceListScreen';
@@ -120,10 +122,18 @@ function App() {
             <img src="../images/menu.png" className="menu-icon" alt="menu-icon" />
           </div>
         </div>
-        {/*-------------------FEATURE CATEGORIES-----------------*/}
+        {/*-------------------SEARCH BOX-----------------*/}
         <div className="small-container">
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history}></SearchBox>
+              )}
+            ></Route>
+          </div>
+        {/*-------------------FEATURE CATEGORIES-----------------*/}
+        <div className="container">
 
-          <main>
+          <main className="container">
             <Route path="/seller/:id" component={SellerScreen}></Route>
             <Route path="/cart/:id?" component={CartScreen}></Route>
             <Route path="/service/:id" component={ServiceScreen} exact></Route>
@@ -135,6 +145,7 @@ function App() {
             <Route path="/placebooking" component={PlaceBookingScreen}></Route>
             <Route path="/booking/:id" component={BookingScreen}></Route>
             <Route path="/bookingHistory" component={BookingHistoryScreen}></Route>
+            <Route path="/search/name/:name?" component={SearchScreen} exact ></Route>
             <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
             <AdminRoute path="/servicelist" component={ServiceListScreen} exact></AdminRoute>
             <AdminRoute path="/bookinglist" component={BookingListScreen} exact></AdminRoute>

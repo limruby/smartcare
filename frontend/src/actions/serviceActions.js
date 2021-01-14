@@ -17,12 +17,12 @@ import {
     SERVICE_DELETE_FAIL,
 } from '../constants/serviceConstants';
 
-export const listServices = ({seller=''}) => async (dispatch) =>{
+export const listServices = ({seller='', name=''}) => async (dispatch) =>{
     dispatch({
         type: SERVICE_LIST_REQUEST
     });
     try {
-        const { data } = await Axios.get(`/api/services?seller=${seller}`);
+        const { data } = await Axios.get(`/api/services?seller=${seller}&name=${name}`);
         dispatch({type: SERVICE_LIST_SUCCESS, payload: data});
 
     }catch(error){

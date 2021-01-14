@@ -7,12 +7,14 @@ import { isAuth, isAdmin, isSellerOrAdmin } from '../utils.js';
 const serviceRouter = express.Router();
 
 serviceRouter.get('/', expressAsyncHandler(async(req, res)=>{
+    const name = req.query.name || '';
     const seller = req.query.seller || '';
+    const nameFilter = name ? { name:{ $regex: name, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};
-    const services = await Service.find({...sellerFilter}).populate(
+    const services = await Service.find({...sellerFilter, ...nameFilter}).populate(
       'seller',
-      'seller.name'
-    );
+      'seller.name',
+    );  
     res.send(services);
 })
 );
