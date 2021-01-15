@@ -18,6 +18,9 @@ import {
     SERVICE_CATEGORY_LIST_REQUEST,
     SERVICE_CATEGORY_LIST_SUCCESS,
     SERVICE_CATEGORY_LIST_FAILURE,
+    SERVICE_REVIEW_CREATE_REQUEST,
+    SERVICE_REVIEW_CREATE_SUCCESS,
+    SERVICE_REVIEW_CREATE_FAILURE,
 } from '../constants/serviceConstants';
 
 export const listServices = ({
@@ -132,5 +135,34 @@ export const createService = () => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message;
       dispatch({ type: SERVICE_DELETE_FAIL, payload: message });
+    }
+  };
+
+  export const createReview = (serviceId, review) => async (
+    dispatch,
+    getState
+  ) => {
+    dispatch({ type: SERVICE_REVIEW_CREATE_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.post(
+        `/api/services/${serviceId}/reviews`,
+        review,
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({
+        type: SERVICE_REVIEW_CREATE_SUCCESS,
+        payload: data.review,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: SERVICE_REVIEW_CREATE_FAILURE, payload: message });
     }
   };

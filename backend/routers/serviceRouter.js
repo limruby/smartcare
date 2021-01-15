@@ -127,4 +127,37 @@ serviceRouter.put(
     })
   );
 
+  serviceRouter.post(
+    '/:id/reviews',
+    isAuth,
+    expressAsyncHandler(async (req, res) => {
+      const serviceId = req.params.id;
+      const service = await Service.findById(serviceId);
+      if (service) {
+        if (service.reviews.find((x) => x.name === req.user.name)) {
+          return res
+            .status(400)
+            .send({ message: 'You already submitted a review' });
+        }
+        const review = {
+          name: req.user.name,
+          rating: Number(req.body.rating),
+          comment: req.body.comment,
+        };
+        service.reviews.push(review);
+        service.numReviews = service.reviews.length;
+        service.rating =
+          service.reviews.reduce((a, c) => c.rating + a, 0) /
+          service.reviews.length;
+        const updatedService = await service.save();
+        res.status(201).send({
+          message: 'Review Created',
+          review: updatedService.reviews[updatedService.reviews.length - 1],
+        });
+      } else {
+        res.status(404).send({ message: 'Service Not Found' });
+      }
+    })
+  );
+
 export default serviceRouter;

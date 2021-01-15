@@ -8,7 +8,7 @@ export default function CheckoutScreen(props) {
     const { userInfo } = userSignin;
     const cart = useSelector(state => state.cart);
     const { customerAddress } = cart;
-    if(!userInfo){
+    if (!userInfo) {
         props.history.push('/signin')
     }
     const [fullName, setFullName] = useState(customerAddress.fullName);
@@ -19,7 +19,7 @@ export default function CheckoutScreen(props) {
     const dispatch = useDispatch();
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveCustomerAddress({fullName, address, city, postalCode, stateMsia}))
+        dispatch(saveCustomerAddress({ fullName, address, city, postalCode, stateMsia }))
         props.history.push('/payment')
         // Save customer address
     }
@@ -75,16 +75,29 @@ export default function CheckoutScreen(props) {
                             required
                         ></input>
                     </div>
-                    <div>
-                        <label htmlFor="state">State</label>
-                        <input
-                            type="text"
+                    <div className="row-3">
+                        <label htmlFor="state">State &nbsp;</label>
+                        <select
                             id="state"
-                            placeholder="Enter state"
                             value={stateMsia}
                             onChange={(e) => setStateMsia(e.target.value)}
-                            required
-                        ></input>
+                        >
+                            <option value="">Select...</option>
+                            <option value="Kuala Lumpur">Kuala Lumpur</option>
+                            <option value="Johor">Johor</option>
+                            <option value="Kedah">Kedah</option>
+                            <option value="Kelantan">Kelantan</option>
+                            <option value="Melaka">Melaka</option>
+                            <option value="Negeri Sembilan">Negeri Sembilan</option>
+                            <option value="Pahang">Pahang</option>
+                            <option value="Penang">Penang</option>
+                            <option value="Perak">Perak</option>
+                            <option value="Perlis">Perlis</option>
+                            <option value="Sabah">Sabah</option>
+                            <option value="Sarawak">Sarawak</option>
+                            <option value="Selangor">Selangor</option>
+                            <option value="Terengganu">Terengganu</option>
+                        </select>
                     </div>
                     <div>
                         <label />

@@ -136,15 +136,18 @@ export default function ServiceEditScreen(props) {
                                         <MessageBox variant="danger">{errorUpload}</MessageBox>
                                     )}
                                 </div>
-                                <div>
-                                    <label htmlFor="category">Category</label>
-                                    <input
+                                <div className="row-3">
+                                    <label htmlFor="category">Category &nbsp;</label>
+                                    <select
                                         id="category"
-                                        type="text"
-                                        placeholder="Enter category"
                                         value={category}
                                         onChange={(e) => setCategory(e.target.value)}
-                                    ></input>
+                                    >
+                                        <option value="">Select...</option>
+                                        <option value="Nurse">Nurse</option>
+                                        <option value="Nursing Homes">Nursing Homes</option>
+                                        <option value="Health Equipment">Health Equipment</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <label htmlFor="schedule">Schedule</label>
