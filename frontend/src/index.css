@@ -12,7 +12,6 @@ body{
 
 main{
   padding: 0.5rem;
-  
 }
 
 .navbar{
@@ -87,11 +86,13 @@ margin-left: 0.2rem;
   text-align: justify;
 }
 .search-col{
-  flex: 1 1 25rem;
+  flex: 1 1 20rem;
+  background: #f8f8f8;
+  padding: 0.5rem;
 }
 
 .search-col-3{
-  flex: 32 1 50rem;
+  flex: 32 1 30rem;
   
 }
 .search-label{
@@ -123,6 +124,9 @@ margin-left: 0.2rem;
 }
 .search-button:hover {
   background-color:  #563434;
+}
+.active {
+  font-weight: bold;
 }
 /*--------END OF SEARCH & FILTERS-------*/
 a{
@@ -199,11 +203,11 @@ aside {
   height: 60%;
   background-color: #fff;
   z-index: 100;
-  transform: translateX(-60rem);
+  transform: translateX(-20rem);
   transition: all 0.5s;
 }
 aside.open {
-  transform: translateX(-20rem);
+  transform: translateX(2rem);
 }
 button.open-sidebar {
   font-size: 3rem;
@@ -227,6 +231,15 @@ aside li {
 }
 button.close-sidebar {
   padding: 0.3rem 0.8rem;
+}
+.row.top {
+  align-items: flex-start;
+}
+.row-category{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 /* CONTAINER TO PUT SERVICES PICS */ 
 .small-container{ 

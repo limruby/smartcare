@@ -143,7 +143,7 @@ function App() {
               <img src="../images/menu.png" className="menu-icon" alt="menu-icon" />
             </div>
             {/*-------------------SEARCH BOX-----------------*/}
-          <div className="small-container">
+          <div className="row-3">
             <Route
               render={({ history }) => (
                 <SearchBox history={history}></SearchBox>
@@ -153,7 +153,7 @@ function App() {
           </div>
           
           {/*-------------------FEATURE CATEGORIES-----------------*/}
-          <div className="container">
+          <div>
             <aside className={sidebarIsOpen ? 'open' : ''}>
               <ul className="categories">
                 <li>
@@ -200,6 +200,7 @@ function App() {
               <Route path="/search/name/:name?" component={SearchScreen} exact ></Route>
               <Route path="/search/category/:category" component={SearchScreen} exact ></Route>
               <Route path="/search/category/:category/name/:name" component={SearchScreen} exact ></Route>
+              <Route path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order" component={SearchScreen} exact ></Route>
               <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
               <AdminRoute path="/servicelist" component={ServiceListScreen} exact></AdminRoute>
               <AdminRoute path="/bookinglist" component={BookingListScreen} exact></AdminRoute>

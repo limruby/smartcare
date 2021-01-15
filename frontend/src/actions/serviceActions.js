@@ -20,12 +20,20 @@ import {
     SERVICE_CATEGORY_LIST_FAILURE,
 } from '../constants/serviceConstants';
 
-export const listServices = ({seller='', name='', category=''}) => async (dispatch) =>{
+export const listServices = ({
+  seller='', 
+  name='', 
+  category='', 
+  order='',
+  min=0, 
+  max=0,
+  rating =0,
+}) => async (dispatch) =>{
     dispatch({
         type: SERVICE_LIST_REQUEST
     });
     try {
-        const { data } = await Axios.get(`/api/services?seller=${seller}&name=${name}&category=${category}`);
+        const { data } = await Axios.get(`/api/services?seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`);
         dispatch({type: SERVICE_LIST_SUCCESS, payload: data});
 
     }catch(error){
