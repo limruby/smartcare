@@ -11,6 +11,16 @@ const reviewSchema = new mongoose.Schema(
     }
   );
 
+  const scheduleSchema = new mongoose.Schema(
+    {
+      schedule: { type: Date, required: true },
+    },
+    {
+      timestamps: true,
+    }
+  );
+
+
 const serviceSchema = new mongoose.Schema(
 
 {
@@ -20,7 +30,7 @@ const serviceSchema = new mongoose.Schema(
     category:{type: String, required: true},
     description:{type: String, required: true},
     price:{type: Number, required: true},
-    schedule:{type: Array, "default":[], required: true},
+    schedule:[{type: Array, "default":[], required: true}],
     rating:{type: Number, required: true},
     numReviews:{type: Number, required: true},
     location:{type: String, required: true},

@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import DateTimePicker from 'react-datetime-picker';
 import { detailsServices, updateService } from '../actions/serviceActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
@@ -12,7 +13,8 @@ export default function ServiceEditScreen(props) {
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
     const [category, setCategory] = useState('');
-    const [schedule, setSchedule] = useState('');
+    //Testing
+    const [schedule, setSchedule] = useState([new Date(2021, 0, 1)]);
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
 
@@ -40,6 +42,7 @@ export default function ServiceEditScreen(props) {
             setDescription(service.description);
         }
     }, [dispatch, props.history, service, serviceId, successUpdate])
+    
     const submitHandler = (e) => {
         e.preventDefault();
         // dispatch update service
@@ -52,6 +55,7 @@ export default function ServiceEditScreen(props) {
             schedule,
             location,
             description,
+            
         })
         )
     }
@@ -79,6 +83,32 @@ export default function ServiceEditScreen(props) {
             setLoadingUpload(false)
         }
     }
+    // eslint-disable-next-line no-lone-blocks
+    {/*TESTING SCHEDULE HANDLER */}
+
+   const addScheduleHandler = (index, value) => {
+    // console.log(index)
+    // console.log(schedule)
+    value = Date()
+    setSchedule(prevState => [...prevState, value]) 
+   }
+  /*
+   const setDateHandler = (newValue) => {
+       setSchedule([newValue])
+   }
+   */
+   const setDateHandler = (index, newValue) => {
+
+        console.log(index)
+        console.log(newValue)
+        console.log(schedule)
+        setSchedule(prevState => {
+            const newArray = [...prevState]
+            newArray[index] = newValue
+            return newArray
+         })
+   }
+   
 
     return (
         <div>
@@ -149,17 +179,27 @@ export default function ServiceEditScreen(props) {
                                         <option value="Health Equipment">Health Equipment</option>
                                     </select>
                                 </div>
+                                {/*Testing add array slot by seller */}
                                 <div>
-                                    <label htmlFor="schedule">Schedule</label>
-                                    <input
+                                   
+                                    <label htmlFor="schedule">Schedule</label>  
+                                                                     
+                                    {schedule.map((schedule, index) => (     
+                                        <li key={index}>                             
+                                        <DateTimePicker
                                         id="schedule"
-                                        type="text"
-                                        name="schedule[]"
-                                        placeholder="Enter schedule"
+                                        key= {index + 1}
+                                        name= "schedule"
+                                        onChange={(newValue) => setDateHandler(newValue, index)}
                                         value={schedule}
-                                        onChange={(e) => setSchedule(e.target.value)}
-                                    ></input>
-                                </div>
+                                        minDate={new Date()}
+                                        disableClock
+                                        />  
+                                        </li>                                 
+                                    )) 
+                                    }                                                                      
+                                  </div>
+                                  <button type="button" className="btn" onClick={(newValue) => addScheduleHandler(newValue)}>Add new schedule</button>
                                 <div>
                                     <label htmlFor="location">Location</label>
                                     <input
@@ -183,7 +223,7 @@ export default function ServiceEditScreen(props) {
                                 </div>
                                 <div>
                                     <label></label>
-                                    <button className="btn" type="submit">
+                                    <button className="btn" type="button" onClick={submitHandler}>
                                         Update
                                     </button>
                                 </div>

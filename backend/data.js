@@ -19,7 +19,7 @@ const data = {
 
     services: [
         {
-            name:'Ms. Jenny',
+            name:'Licensed Nurse',
             category:'Nurse',
             image:'/images/nurse1.png',
             price: 50,

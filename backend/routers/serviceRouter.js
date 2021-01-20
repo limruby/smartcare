@@ -77,9 +77,7 @@ serviceRouter.post('/', isAuth, isAdmin, isSellerOrAdmin, expressAsyncHandler(as
         price: 0,
         category:'sample category',
         location: 'sample location',
-        schedule:[
-            "Time: Day: Date:",
-        ],
+        schedule:[Date.now()],
         rating: 0,
         numReviews: 0,
         description: 'Contact of PIC, name of PIC, pricing, location, staff, what service do we provide, visiting hour for family members'
@@ -159,5 +157,6 @@ serviceRouter.put(
       }
     })
   );
+  
 
 export default serviceRouter;
