@@ -16,6 +16,7 @@ export default function SearchScreen(props) {
         max = 0,
         rating = 0,
         order = 'newest',
+        location='all',
     } = useParams();
     const dispatch = useDispatch();
     const serviceList = useSelector((state) => state.serviceList);
@@ -29,21 +30,23 @@ export default function SearchScreen(props) {
     useEffect(() => {
         dispatch(listServices({
             name: name !== 'all' ? name : '',
+            location: location !== 'all' ? location : '',
             category: category !== 'all' ? category : '',
             min,
             max,
             rating,
             order,
         }));
-    }, [dispatch, name, category, min, max, rating, order]);
+    }, [dispatch, name, category, min, max, rating, order, location]);
     const getFilterUrl = (filter) => {
         const filterCategory = filter.category || category;
         const filterName = filter.name || name;
+        const filterLocation = filter.location || location;
         const filterRating = filter.rating || rating;
         const sortOrder = filter.order || order;
         const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
         const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
-        return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}`;
+        return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/location/${filterLocation}`;
     };
     return (
         <div>

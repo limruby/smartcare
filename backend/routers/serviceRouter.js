@@ -11,6 +11,7 @@ serviceRouter.get('/', expressAsyncHandler(async(req, res)=>{
     const category = req.query.category || '';
     const seller = req.query.seller || '';
     const order = req.query.order || '';
+    const location = req.query.location || '';
     const min =
       req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
     const max =
@@ -20,6 +21,7 @@ serviceRouter.get('/', expressAsyncHandler(async(req, res)=>{
         ? Number(req.query.rating)
         : 0;
     const nameFilter = name ? { name:{ $regex: name, $options: 'i' } } : {};
+    const locationFilter = location ? { location: { $regex: location, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};
     const categoryFilter = category ? { category } : {};
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
@@ -32,7 +34,7 @@ serviceRouter.get('/', expressAsyncHandler(async(req, res)=>{
         : order === 'toprated'
         ? { rating: -1 }
         : { _id: -1 };
-    const services = await Service.find({...sellerFilter, ...nameFilter, ...categoryFilter, ...priceFilter, ...ratingFilter,})
+    const services = await Service.find({...sellerFilter, ...nameFilter, ...categoryFilter, ...priceFilter, ...ratingFilter, ...locationFilter})
     .populate( 'seller', 'seller.name')
     .sort(sortOrder)
     res.send(services);
@@ -44,6 +46,14 @@ serviceRouter.get(
   expressAsyncHandler(async (req, res) => {
     const categories = await Service.find().distinct('category');
     res.send(categories);
+  })
+);
+
+serviceRouter.get(
+  '/location',
+  expressAsyncHandler(async (req, res) => {
+    const location = await Service.find().distinct('location');
+    res.send(location);
   })
 );
 

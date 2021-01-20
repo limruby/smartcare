@@ -17,7 +17,7 @@ export default function ServiceEditScreen(props) {
     const [description, setDescription] = useState('');
 
     const serviceDetails = useSelector((state) => state.serviceDetails);
-    const { loading, error, service } = serviceDetails;
+    const { loading, error, services } = serviceDetails;
 
     const serviceUpdate = useSelector((state) => state.serviceUpdate);
     const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = serviceUpdate;
@@ -27,19 +27,19 @@ export default function ServiceEditScreen(props) {
         if (successUpdate) {
             props.history.push('/servicelist');
         }
-        if (!service || service._id !== serviceId || successUpdate) {
+        if (!services || services._id !== serviceId || successUpdate) {
             dispatch({ type: SERVICE_UPDATE_RESET });
             dispatch(detailsServices(serviceId));
         } else {
-            setName(service.name);
-            setPrice(service.price);
-            setImage(service.image);
-            setCategory(service.category);
-            setSchedule(service.schedule);
-            setLocation(service.location);
-            setDescription(service.description);
+            setName(services.name);
+            setPrice(services.price);
+            setImage(services.image);
+            setCategory(services.category);
+            setSchedule(services.schedule);
+            setLocation(services.location);
+            setDescription(services.description);
         }
-    }, [dispatch, props.history, service, serviceId, successUpdate])
+    }, [dispatch, props.history, services, serviceId, successUpdate])
     const submitHandler = (e) => {
         e.preventDefault();
         // dispatch update service

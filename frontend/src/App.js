@@ -198,9 +198,12 @@ function App() {
               <Route path="/booking/:id" component={BookingScreen}></Route>
               <Route path="/bookingHistory" component={BookingHistoryScreen}></Route>
               <Route path="/search/name/:name?" component={SearchScreen} exact ></Route>
+              <Route path="/search/location/:location?" component={SearchScreen} exact ></Route>
+              <Route path="/search/name/:name?/location/:location?" component={SearchScreen} exact ></Route>
               <Route path="/search/category/:category" component={SearchScreen} exact ></Route>
               <Route path="/search/category/:category/name/:name" component={SearchScreen} exact ></Route>
-              <Route path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order" component={SearchScreen} exact ></Route>
+              <Route path="/search/category/:category/location/:location" component={SearchScreen} exact ></Route>
+              <Route path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/location/:location" component={SearchScreen} exact ></Route>
               <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
               <AdminRoute path="/servicelist" component={ServiceListScreen} exact></AdminRoute>
               <AdminRoute path="/bookinglist" component={BookingListScreen} exact></AdminRoute>

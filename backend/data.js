@@ -36,7 +36,7 @@ const data = {
         },
         {
             name:'Rumah Kesayangan',
-            category:'Nursing Home',
+            category:'Nursing Homes',
             image:'/images/center1.png',
             price: 150,
             location: 'KL',
