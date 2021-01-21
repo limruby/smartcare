@@ -14,12 +14,12 @@ export default function ServiceEditScreen(props) {
     const [image, setImage] = useState('');
     const [category, setCategory] = useState('');
     //Testing
-    const [schedule, setSchedule] = useState([new Date(2021, 0, 1)]);
+    const [schedule, setSchedule] = useState([new Date(2021, 1, 1)]);
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
 
     const serviceDetails = useSelector((state) => state.serviceDetails);
-    const { loading, error, service } = serviceDetails;
+    const { loading, error, services } = serviceDetails;
 
     const serviceUpdate = useSelector((state) => state.serviceUpdate);
     const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = serviceUpdate;
@@ -29,19 +29,19 @@ export default function ServiceEditScreen(props) {
         if (successUpdate) {
             props.history.push('/servicelist');
         }
-        if (!service || service._id !== serviceId || successUpdate) {
+        if (!services || services._id !== serviceId || successUpdate) {
             dispatch({ type: SERVICE_UPDATE_RESET });
             dispatch(detailsServices(serviceId));
         } else {
-            setName(service.name);
-            setPrice(service.price);
-            setImage(service.image);
-            setCategory(service.category);
-            setSchedule(service.schedule);
-            setLocation(service.location);
-            setDescription(service.description);
+            setName(services.name);
+            setPrice(services.price);
+            setImage(services.image);
+            setCategory(services.category);
+            setSchedule(services.schedule.map(item =>  new Date(item)));
+            setLocation(services.location);
+            setDescription(services.description);
         }
-    }, [dispatch, props.history, service, serviceId, successUpdate])
+    }, [dispatch, props.history, services, serviceId, successUpdate])
     
     const submitHandler = (e) => {
         e.preventDefault();
@@ -85,20 +85,27 @@ export default function ServiceEditScreen(props) {
     }
     // eslint-disable-next-line no-lone-blocks
     {/*TESTING SCHEDULE HANDLER */}
-
-   const addScheduleHandler = (index, value) => {
+    
+   const addScheduleHandler = (value) => {
     // console.log(index)
     // console.log(schedule)
-    value = Date()
+   // const dateValue = typeof value === "string" ? new Date(value) : value;
     setSchedule(prevState => [...prevState, value]) 
    }
-  /*
-   const setDateHandler = (newValue) => {
-       setSchedule([newValue])
-   }
-   */
-   const setDateHandler = (index, newValue) => {
 
+   const removeSchedule = (index) => {
+       const schedules = [...schedule];
+       schedules.splice(index, 1);
+       setSchedule(schedules);
+   }
+  
+   const setDateHandler = (e, index) => {
+       const newSchedule = [...schedule];
+       newSchedule[index] = e;
+       setSchedule(newSchedule);
+   }
+   /*
+   const setDateHandler = (index, newValue) => {
         console.log(index)
         console.log(newValue)
         console.log(schedule)
@@ -108,6 +115,7 @@ export default function ServiceEditScreen(props) {
             return newArray
          })
    }
+   */
    
 
     return (
@@ -190,16 +198,17 @@ export default function ServiceEditScreen(props) {
                                         id="schedule"
                                         key= {index + 1}
                                         name= "schedule"
-                                        onChange={(newValue) => setDateHandler(newValue, index)}
+                                        onChange={(e) => setDateHandler(e, index)}
                                         value={schedule}
                                         minDate={new Date()}
                                         disableClock
                                         />  
+                                        <button onClick={() => removeSchedule(index)}>🚮</button>
                                         </li>                                 
                                     )) 
                                     }                                                                      
                                   </div>
-                                  <button type="button" className="btn" onClick={(newValue) => addScheduleHandler(newValue)}>Add new schedule</button>
+                                  <button type="button" className="btn" onClick={() => addScheduleHandler(new Date())}>Add new schedule</button>
                                 <div>
                                     <label htmlFor="location">Location</label>
                                     <input
