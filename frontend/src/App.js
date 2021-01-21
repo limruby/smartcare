@@ -71,7 +71,6 @@ function App() {
               <nav>
                 <ul id="MenuItems">
                   <li><Link to="/">Services</Link></li>
-                  <li><Link to="">About</Link></li>
                   {
                     userInfo ? (
                       <li>
@@ -117,9 +116,6 @@ function App() {
                     <div className="dropdown">
                       <Link to="#admin">Admin <i className="fa fa-caret-down"></i></Link>
                       <ul className="dropdown-content">
-                        <li>
-                          <Link to="/dashboard">Dashboard</Link>
-                        </li>
                         <li>
                           <Link to="/servicelist">Services</Link>
                         </li>

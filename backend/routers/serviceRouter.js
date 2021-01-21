@@ -87,9 +87,7 @@ serviceRouter.post('/', isAuth, isAdmin, isSellerOrAdmin, expressAsyncHandler(as
         price: 0,
         category:'sample category',
         location: 'sample location',
-        schedule:[
-            "Time: Day: Date:",
-        ],
+        schedule:[new Date()],
         rating: 0,
         numReviews: 0,
         description: 'Contact of PIC, name of PIC, pricing, location, staff, what service do we provide, visiting hour for family members'
@@ -115,7 +113,6 @@ serviceRouter.put(
         service.description = req.body.description;
         const updatedService = await service.save();
         res.send({ message: 'Service Updated', service: updatedService });
-        console.log(service.image)
       } else {
         res.status(404).send({ message: 'Service Not Found' });
       }
